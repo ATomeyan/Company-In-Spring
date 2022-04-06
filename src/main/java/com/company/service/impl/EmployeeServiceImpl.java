@@ -23,13 +23,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employeeList = new ArrayList<>();
         Iterable<Employee> iterable = repository.findAll();
 
-        for (Employee e : iterable) {
-            employeeList.add(e);
-        }
+        iterable.forEach(employee -> repository.findAll().add(employee));
+
+//        for (Employee e : iterable) {
+//            employeeList.add(e);
+//        }
 
         return employeeList;
     }
-
     @Override
     public Employee getEmployeeById() {
 
@@ -44,7 +45,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee() {
+    public void deleteEmployee(int id) {
 
+        repository.deleteById(id);
     }
 }
