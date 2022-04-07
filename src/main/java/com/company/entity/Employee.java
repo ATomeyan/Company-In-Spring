@@ -6,108 +6,60 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "employee")
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "id")
+    private int id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
 
-    @Lob
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private String gender;
 
-    @Column(name = "isActive", nullable = false)
-    private Boolean isActive = false;
+    @Column(name = "isActive")
+    private boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "position_id", nullable = false)
-    private Position position;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id")
+    private Position positionId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "department_id", nullable = false)
-    private Department department;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department departmentId;
 
     public Employee() {
     }
 
-    public Employee(Integer id, String firstName, String lastName, LocalDate dateOfBirth, String email, String gender,
-                    Boolean isActive, Position position, Department department) {
+    public Employee(int id, String firstName, String lastName, LocalDate dateOfBirth, String email, String gender,
+                    boolean active, Position positionId, Department departmentId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.gender = gender;
-        this.isActive = isActive;
-        this.position = position;
-        this.department = department;
+        this.active = active;
+        this.positionId = positionId;
+        this.departmentId = departmentId;
     }
 
-    public Department getDepartment() {
-        return department;
+    public int getId() {
+        return id;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -118,12 +70,60 @@ public class Employee {
         this.firstName = firstName;
     }
 
-    public Integer getId() {
-        return id;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Position getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(Position positionId) {
+        this.positionId = positionId;
+    }
+
+    public Department getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Department departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -135,9 +135,9 @@ public class Employee {
                 ", dateOfBirth=" + dateOfBirth +
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
-                ", isActive=" + isActive +
-                ", position=" + position +
-                ", department=" + department +
+                ", active=" + active +
+                ", positionId=" + positionId +
+                ", departmentId=" + departmentId +
                 '}';
     }
 }

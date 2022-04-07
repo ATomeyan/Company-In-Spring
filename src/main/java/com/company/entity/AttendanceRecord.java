@@ -1,7 +1,7 @@
 package com.company.entity;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "attendance_record")
@@ -12,10 +12,10 @@ public class AttendanceRecord {
     private Integer id;
 
     @Column(name = "entrance_time", nullable = false)
-    private Instant entranceTime;
+    private LocalDateTime entranceTime;
 
     @Column(name = "exit_time", nullable = false)
-    private Instant exitTime;
+    private LocalDateTime exitTime;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "employee_id", nullable = false)
@@ -24,7 +24,7 @@ public class AttendanceRecord {
     public AttendanceRecord() {
     }
 
-    public AttendanceRecord(Integer id, Instant entranceTime, Instant exitTime, Employee employee) {
+    public AttendanceRecord(Integer id, LocalDateTime entranceTime, LocalDateTime exitTime, Employee employee) {
         this.id = id;
         this.entranceTime = entranceTime;
         this.exitTime = exitTime;
@@ -39,19 +39,19 @@ public class AttendanceRecord {
         this.employee = employee;
     }
 
-    public Instant getExitTime() {
+    public LocalDateTime getExitTime() {
         return exitTime;
     }
 
-    public void setExitTime(Instant exitTime) {
+    public void setExitTime(LocalDateTime exitTime) {
         this.exitTime = exitTime;
     }
 
-    public Instant getEntranceTime() {
+    public LocalDateTime getEntranceTime() {
         return entranceTime;
     }
 
-    public void setEntranceTime(Instant entranceTime) {
+    public void setEntranceTime(LocalDateTime entranceTime) {
         this.entranceTime = entranceTime;
     }
 

@@ -3,16 +3,19 @@ package com.company.service.impl;
 import com.company.entity.Employee;
 import com.company.repository.EmployeeRepository;
 import com.company.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository repository;
 
+    @Autowired
     public EmployeeServiceImpl(EmployeeRepository repository) {
         this.repository = repository;
     }
@@ -23,18 +26,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employeeList = new ArrayList<>();
         Iterable<Employee> iterable = repository.findAll();
 
-        iterable.forEach(employee -> repository.findAll().add(employee));
-
-//        for (Employee e : iterable) {
-//            employeeList.add(e);
-//        }
+        for (Employee e : iterable) {
+            employeeList.add(e);
+        }
 
         return employeeList;
     }
-    @Override
-    public Employee getEmployeeById() {
 
-        return null;
+    @Override
+    public Optional<Employee> getEmployeeById(int id) {
+
+        return repository.findById(id);
     }
 
     @Override

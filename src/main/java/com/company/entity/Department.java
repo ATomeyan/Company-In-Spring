@@ -1,7 +1,6 @@
 package com.company.entity;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -15,24 +14,12 @@ public class Department {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "department")
-    private Set<Employee> employees = new LinkedHashSet<>();
-
     public Department() {
     }
 
     public Department(Integer id, String name, Set<Employee> employees) {
         this.id = id;
         this.name = name;
-        this.employees = employees;
-    }
-
-    public Set<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
     }
 
     public String getName() {
@@ -56,7 +43,6 @@ public class Department {
         return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", employees=" + employees +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package com.company.entity;
 
 import javax.persistence.*;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -9,14 +8,11 @@ import java.util.Set;
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
-
-    @OneToMany(mappedBy = "position")
-    private Set<Employee> employees = new LinkedHashSet<>();
 
     public Position() {
     }
@@ -24,15 +20,6 @@ public class Position {
     public Position(Integer id, String name, Set<Employee> employees) {
         this.id = id;
         this.name = name;
-        this.employees = employees;
-    }
-
-    public Set<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
     }
 
     public String getName() {
@@ -56,7 +43,6 @@ public class Position {
         return "Position{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", employees=" + employees +
                 '}';
     }
 }
