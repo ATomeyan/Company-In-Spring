@@ -5,7 +5,7 @@ import com.company.repository.AttendanceRecordRepository;
 import com.company.service.AttendanceRecordService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +31,11 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public List<AttendanceRecord> getByDateTime(LocalDateTime dateTime) {
+    public List<AttendanceRecord> getByDateTimeAndName(LocalDate date, String departmentName) {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
-        Iterable<AttendanceRecord> iterable = repository.findRecordByEntranceTime(dateTime);
+        Iterable<AttendanceRecord> iterable = repository.findRecordByEntranceTimeAndDepartmentName(date, departmentName);
 
-        for (AttendanceRecord r: iterable) {
+        for (AttendanceRecord r : iterable) {
             attendanceRecords.add(r);
         }
 
