@@ -3,7 +3,6 @@ package com.company.service.impl;
 import com.company.entity.Department;
 import com.company.repository.DepartmentRepository;
 import com.company.service.DepartmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository repository;
 
-    @Autowired
     public DepartmentServiceImpl(DepartmentRepository repository) {
         this.repository = repository;
     }

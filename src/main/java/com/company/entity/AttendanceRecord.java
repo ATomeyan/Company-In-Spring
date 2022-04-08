@@ -6,19 +6,20 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "attendance_record")
 public class AttendanceRecord {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "entrance_time", nullable = false)
+    @Column(name = "entrance_time")
     private LocalDateTime entranceTime;
 
-    @Column(name = "exit_time", nullable = false)
+    @Column(name = "exit_time")
     private LocalDateTime exitTime;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
     public AttendanceRecord() {

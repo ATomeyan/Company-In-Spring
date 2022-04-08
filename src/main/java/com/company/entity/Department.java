@@ -1,23 +1,23 @@
 package com.company.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "department")
 public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     public Department() {
     }
 
-    public Department(Integer id, String name, Set<Employee> employees) {
+    public Department(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

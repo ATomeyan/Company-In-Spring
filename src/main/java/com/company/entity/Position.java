@@ -1,11 +1,11 @@
 package com.company.entity;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "position")
 public class Position {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,7 +17,7 @@ public class Position {
     public Position() {
     }
 
-    public Position(Integer id, String name, Set<Employee> employees) {
+    public Position(Integer id, String name) {
         this.id = id;
         this.name = name;
     }

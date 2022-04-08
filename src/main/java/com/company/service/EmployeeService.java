@@ -9,7 +9,7 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployees();
 
-    Optional<Employee> getEmployeeById(int id);
+    Employee getEmployeeById(int id);
 
     Employee saveEmployee(Employee employee);
 

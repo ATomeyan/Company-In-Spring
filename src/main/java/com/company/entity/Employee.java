@@ -27,14 +27,14 @@ public class Employee {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "isActive")
-    private boolean active;
+    @Column(name = "is_active")
+    private Boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "position_id")
     private Position positionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department departmentId;
 
@@ -42,7 +42,7 @@ public class Employee {
     }
 
     public Employee(int id, String firstName, String lastName, LocalDate dateOfBirth, String email, String gender,
-                    boolean active, Position positionId, Department departmentId) {
+                    Boolean active, Position positionId, Department departmentId) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -102,11 +102,11 @@ public class Employee {
         this.gender = gender;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 

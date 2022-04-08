@@ -3,7 +3,6 @@ package com.company.service.impl;
 import com.company.entity.AttendanceRecord;
 import com.company.repository.AttendanceRecordRepository;
 import com.company.service.AttendanceRecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
 
     private final AttendanceRecordRepository repository;
 
-    @Autowired
     public AttendanceRecordServiceImpl(AttendanceRecordRepository repository) {
         this.repository = repository;
     }
