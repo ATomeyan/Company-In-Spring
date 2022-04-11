@@ -12,5 +12,7 @@ public interface EmployeeService {
 
     Employee saveEmployee(Employee employee);
 
+    Employee update(int id, Employee employee);
+
     void deleteEmployee(int id);
 }

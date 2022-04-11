@@ -3,14 +3,14 @@ package com.company.entity;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+//@Proxy(lazy = false)
 @Entity
 @Table(name = "employee")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -41,7 +41,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int id, String firstName, String lastName, LocalDate dateOfBirth, String email, String gender,
+    public Employee(Integer id, String firstName, String lastName, LocalDate dateOfBirth, String email, String gender,
                     Boolean active, Position positionId, Department departmentId) {
         this.id = id;
         this.firstName = firstName;
@@ -54,11 +54,11 @@ public class Employee {
         this.departmentId = departmentId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

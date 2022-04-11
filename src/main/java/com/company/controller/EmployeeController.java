@@ -31,6 +31,12 @@ public class EmployeeController {
         return service.saveEmployee(employee);
     }
 
+    @PostMapping("/edit/{id}")
+    public Employee editEmployee(@PathVariable(name = "id") int id, @RequestBody Employee employee){
+
+        return service.update(id, employee);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable int id) {
         service.deleteEmployee(id);

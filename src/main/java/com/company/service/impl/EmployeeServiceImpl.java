@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -33,19 +34,52 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeById(int id) {
 
-        return repository.getById(id);
+        Optional<Employee> employee = repository.findById(id);
+        if (employee.isPresent())
+            return repository.getById(id);
+        else
+            return null;
     }
 
     @Override
     public Employee saveEmployee(Employee employee) {
+
         employee = repository.save(employee);
 
         return employee;
     }
 
     @Override
+    public Employee update(int id, Employee employee) {
+
+        Optional<Employee> emp = repository.findById(id);
+        Employee newEmployee = new Employee();
+
+        if (emp.isPresent()) {
+
+            newEmployee.setId(employee.getId());
+            newEmployee.setFirstName(employee.getFirstName());
+            newEmployee.setLastName(employee.getLastName());
+            newEmployee.setDateOfBirth(employee.getDateOfBirth());
+            newEmployee.setEmail(employee.getEmail());
+            newEmployee.setGender(employee.getGender());
+            newEmployee.setActive(employee.isActive());
+            newEmployee.setPositionId(employee.getPositionId());
+            newEmployee.setDepartmentId(employee.getDepartmentId());
+        }
+
+        newEmployee = repository.save(employee);
+
+        return newEmployee;
+    }
+
+    @Override
     public void deleteEmployee(int id) {
 
-        repository.deleteById(id);
+        Optional<Employee> employee = repository.findById(id);
+
+        if (employee.isPresent()) {
+            repository.deleteById(id);
+        }
     }
 }
