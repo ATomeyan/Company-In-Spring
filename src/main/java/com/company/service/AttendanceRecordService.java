@@ -9,5 +9,5 @@ public interface AttendanceRecordService {
 
     List<AttendanceRecord> getAllRecords();
 
-    List<AttendanceRecord> getByDateTimeAndName(LocalDate date, String departmentName);
+    List<AttendanceRecord> getByDateTimeAndName(LocalDate entranceDate, LocalDate exitDate, String departmentName);
 }

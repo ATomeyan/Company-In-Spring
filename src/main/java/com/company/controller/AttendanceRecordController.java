@@ -25,9 +25,10 @@ public class AttendanceRecordController {
 
     @GetMapping("/{date}/{department}")
     public List<AttendanceRecord> getRecordsByDate(
-            @PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date,
+            @PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate entranceDate,
+            @PathVariable("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate exitDate,
             @PathVariable("department") String department) {
 
-        return service.getByDateTimeAndName(date, department);
+        return service.getByDateTimeAndName(entranceDate, exitDate, department);
     }
 }

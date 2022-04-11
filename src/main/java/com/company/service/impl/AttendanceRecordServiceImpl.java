@@ -31,9 +31,9 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public List<AttendanceRecord> getByDateTimeAndName(LocalDate date, String departmentName) {
+    public List<AttendanceRecord> getByDateTimeAndName(LocalDate entranceDate, LocalDate exitDate, String departmentName) {
         List<AttendanceRecord> attendanceRecords = new ArrayList<>();
-        Iterable<AttendanceRecord> iterable = repository.findRecordByEntranceTimeAndDepartmentName(date, departmentName);
+        Iterable<AttendanceRecord> iterable = repository.findRecordByEntranceTimeAndDepartmentName(entranceDate, exitDate, departmentName);
 
         for (AttendanceRecord r : iterable) {
             attendanceRecords.add(r);
