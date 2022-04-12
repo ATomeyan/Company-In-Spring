@@ -96,9 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<EmployeeDto> employees = new ArrayList<>();
 
         for (Employee e : employee) {
-
             EmployeeDto employeeDto = employeeMapper.entityToDto(e);
-
             employees.add(employeeDto);
         }
 
