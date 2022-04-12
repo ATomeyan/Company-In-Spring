@@ -1,8 +1,13 @@
 package com.company.service.impl;
 
+import ch.qos.logback.classic.Logger;
+import com.company.dto.EmployeeDto;
 import com.company.entity.Employee;
+import com.company.mapper.EmployeeMapper;
 import com.company.repository.EmployeeRepository;
 import com.company.service.EmployeeService;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,74 +17,91 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private final Logger logger = (Logger) LoggerFactory.getLogger("");
+    private final EmployeeMapper employeeMapper = new EmployeeMapper();
     private final EmployeeRepository repository;
 
+    @Autowired
     public EmployeeServiceImpl(EmployeeRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeDto> getAllEmployees() {
 
-        List<Employee> employeeList = new ArrayList<>();
-        Iterable<Employee> iterable = repository.findAll();
+        return getEmployeeDto(repository.findAll());
+    }
 
-        for (Employee e : iterable) {
-            employeeList.add(e);
+    @Override
+    public EmployeeDto getEmployeeById(Integer id) {
+
+        if (id == null || id <= 0) {
+            logger.info("");
+            throw new IllegalArgumentException();
         }
 
-        return employeeList;
+        Employee employee = repository.getById(id);
+
+        if (employee == null) {
+            logger.info("");
+            throw new IllegalArgumentException();
+        }
+
+        return employeeMapper.entityToDto(employee);
+
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
+    public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 
-        Optional<Employee> employee = repository.findById(id);
-        if (employee.isPresent())
-            return repository.getById(id);
-        else
-            return null;
+        return employeeDto;
     }
 
     @Override
-    public Employee saveEmployee(Employee employee) {
-
-        employee = repository.save(employee);
-
-        return employee;
-    }
-
-    @Override
-    public Employee update(int id, Employee employee) {
+    public EmployeeDto update(Integer id, EmployeeDto employeeDto) {
 
         Optional<Employee> emp = repository.findById(id);
-        Employee newEmployee = new Employee();
+        EmployeeDto newEmployee = new EmployeeDto();
 
         if (emp.isPresent()) {
 
-            newEmployee.setId(employee.getId());
-            newEmployee.setFirstName(employee.getFirstName());
-            newEmployee.setLastName(employee.getLastName());
-            newEmployee.setDateOfBirth(employee.getDateOfBirth());
-            newEmployee.setEmail(employee.getEmail());
-            newEmployee.setGender(employee.getGender());
-            newEmployee.setActive(employee.isActive());
-            newEmployee.setPositionId(employee.getPositionId());
-            newEmployee.setDepartmentId(employee.getDepartmentId());
+            newEmployee.setId(employeeDto.getId());
+            newEmployee.setFirstName(employeeDto.getFirstName());
+            newEmployee.setLastName(employeeDto.getLastName());
+            newEmployee.setDateOfBirth(employeeDto.getDateOfBirth());
+            newEmployee.setEmail(employeeDto.getEmail());
+            newEmployee.setGender(employeeDto.getGender());
+            newEmployee.setActive(employeeDto.getActive());
+            newEmployee.setPositionId(employeeDto.getPositionId());
+            newEmployee.setDepartmentId(employeeDto.getDepartmentId());
         }
-
-        newEmployee = repository.save(employee);
 
         return newEmployee;
     }
 
     @Override
-    public void deleteEmployee(int id) {
+    public EmployeeDto deleteEmployee(Integer id) {
 
         Optional<Employee> employee = repository.findById(id);
 
         if (employee.isPresent()) {
             repository.deleteById(id);
         }
+
+        return null;
+    }
+
+    private List<EmployeeDto> getEmployeeDto(List<Employee> employee) {
+
+        List<EmployeeDto> employees = new ArrayList<>();
+
+        for (Employee e : employee) {
+
+            EmployeeDto employeeDto = employeeMapper.entityToDto(e);
+
+            employees.add(employeeDto);
+        }
+
+        return employees;
     }
 }

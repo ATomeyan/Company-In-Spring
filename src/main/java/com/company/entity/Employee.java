@@ -3,7 +3,6 @@ package com.company.entity;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-//@Proxy(lazy = false)
 @Entity
 @Table(name = "employee")
 public class Employee {
