@@ -104,3 +104,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees;
     }
 }
+
+/**
+ * @Transactional
+ * public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
+ *     if (!EmployeeValidation.isValid(employeeDto) || employeeDto.getEmployeeId() == null || employeeDto.getEmployeeId() <= 0) {
+ *         LOGGER.error("The employee {} is not a valid employee", employeeDto);
+ *         throw new NotValidException("The employee " + employeeDto + " is not a valid employee");
+ *     }
+ *
+ *     Employee employee = employeeRepository.findById(employeeDto.getEmployeeId()).orElse(null);
+ *     if (employee == null) {
+ *         LOGGER.info("The employee {} was not found", employeeDto);
+ *         throw new NotFoundException("The employee " + employeeDto + " was not found");
+ *     }
+ *
+ *     List<Employee> employees = employeeRepository.findAllByCriteria(new Employee(employeeDto.getFName(),
+ *     employeeDto.getLName(), employeeDto.getBirthday())).orElse(null);
+ *
+ *     if (employees != null && !employees.isEmpty()) {
+ *         LOGGER.warn("The employee {} exists", employeeDto);
+ *         throw new AlreadyExistsException("The employee " + employeeDto + " exists");
+ *     }
+ *
+ *     return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
+ * }
+ */
