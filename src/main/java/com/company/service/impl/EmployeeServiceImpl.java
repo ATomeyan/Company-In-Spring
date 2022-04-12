@@ -3,6 +3,7 @@ package com.company.service.impl;
 import ch.qos.logback.classic.Logger;
 import com.company.dto.EmployeeDto;
 import com.company.entity.Employee;
+import com.company.exceptions.NotFoundException;
 import com.company.mapper.EmployeeMapper;
 import com.company.repository.EmployeeRepository;
 import com.company.service.EmployeeService;
@@ -43,8 +44,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = repository.getById(id);
 
         if (employee == null) {
-            logger.info("");
-            throw new IllegalArgumentException();
+            logger.info("Employee by Id " + id + " not found.");
+            throw new NotFoundException("Employee by Id " + id + " not found.");
         }
 
         return employeeMapper.entityToDto(employee);
