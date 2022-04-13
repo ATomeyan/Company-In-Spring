@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final Logger logger = (Logger) LoggerFactory.getLogger("company");
+    private final Logger logger = (Logger) LoggerFactory.getLogger("company.employee");
     private final EmployeeMapper employeeMapper = new EmployeeMapper();
     private final EmployeeRepository repository;
 
@@ -37,14 +37,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Integer id) {
 
         if (id == null || id <= 0) {
-            logger.info("");
-            throw new IllegalArgumentException();
+            logger.info("Id can't be null or less than 0");
+            throw new IllegalArgumentException("Id can't be null or less than 0");
         }
 
         Employee employee = repository.getById(id);
 
         if (employee == null) {
-            logger.error("Employee by id not found. {}", id);
+            logger.error("Employee by id not found: {}", id);
             throw new NotFoundException("Employee by Id " + id + " not found.");
         }
 
@@ -61,13 +61,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto update(Integer id, EmployeeDto employeeDto) {
 
         if (id == null || id <= 0) {
-            logger.info("");
-            throw new IllegalArgumentException();
+            logger.info("Id can't be null or less than 0");
+            throw new IllegalArgumentException("Id can't be null or less than 0");
         }
 
         Employee employee = repository.getById(id);
         if (employee == null) {
-            logger.error("Employee does not found. {} ", employee);
+            logger.error("Employee does not found: {} ", id);
             throw new NotFoundException("Employee does not found");
         }
 
@@ -79,11 +79,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto deleteEmployee(Integer id) {
 
-        Optional<Employee> employee = repository.findById(id);
-
-        if (employee.isPresent()) {
-            repository.deleteById(id);
+        if (id == null || id <= 0){
+            logger.error("Id can't be null or less than 0");
+            throw new IllegalArgumentException("Id can't be null or less than 0");
         }
+
+        Employee employee = repository.getById(id);
+
+        if (employee == null){
+            logger.error("Employee does not found: {} ", id);
+            throw new NotFoundException("Employee does not found: {}");
+        }
+
+        repository.deleteById(id);
 
         return null;
     }
