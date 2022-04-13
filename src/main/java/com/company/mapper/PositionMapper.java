@@ -6,6 +6,11 @@ import com.company.entity.Position;
 public class PositionMapper {
 
     public PositionDto entityToDto(Position position) {
+
+        if (position == null){
+            throw new IllegalArgumentException();
+        }
+
         PositionDto positionDto = new PositionDto();
 
         positionDto.setId(position.getId());
@@ -15,6 +20,11 @@ public class PositionMapper {
     }
 
     public Position dtoToEntity(PositionDto positionDto) {
+
+        if (positionDto == null){
+            throw new IllegalArgumentException();
+        }
+
         Position position = new Position();
 
         position.setId(positionDto.getId());

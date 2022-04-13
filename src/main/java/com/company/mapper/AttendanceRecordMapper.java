@@ -8,6 +8,11 @@ import lombok.Data;
 public class AttendanceRecordMapper {
 
     public AttendanceRecordDto entityToDto(AttendanceRecord attendanceRecord) {
+
+        if (attendanceRecord == null){
+            throw new IllegalArgumentException();
+        }
+
         AttendanceRecordDto attendanceRecordDto = new AttendanceRecordDto();
 
         attendanceRecordDto.setId(attendanceRecord.getId());
@@ -19,6 +24,11 @@ public class AttendanceRecordMapper {
     }
 
     public AttendanceRecord dtoToEntity(AttendanceRecordDto attendanceRecordDto) {
+
+        if (attendanceRecordDto == null){
+            throw new IllegalArgumentException();
+        }
+
         AttendanceRecord attendanceRecord = new AttendanceRecord();
 
         attendanceRecord.setId(attendanceRecordDto.getId());

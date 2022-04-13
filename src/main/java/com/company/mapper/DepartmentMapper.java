@@ -6,6 +6,11 @@ import com.company.entity.Department;
 public class DepartmentMapper {
 
     public DepartmentDto entityToDto(Department department) {
+
+        if (department == null){
+            throw new IllegalArgumentException();
+        }
+
         DepartmentDto departmentDto = new DepartmentDto();
 
         departmentDto.setId(department.getId());
@@ -15,6 +20,11 @@ public class DepartmentMapper {
     }
 
     public Department dtoToEntity(DepartmentDto departmentDto) {
+
+        if (departmentDto == null){
+            throw new IllegalArgumentException();
+        }
+
         Department department = new Department();
 
         department.setId(departmentDto.getId());
