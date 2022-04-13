@@ -6,6 +6,11 @@ import com.company.entity.Employee;
 public class EmployeeMapper {
 
     public EmployeeDto entityToDto(Employee employee) {
+
+        if (employee == null){
+            throw new IllegalArgumentException();
+        }
+
         EmployeeDto employeeDto = new EmployeeDto();
 
         employeeDto.setId(employee.getId());
@@ -22,14 +27,19 @@ public class EmployeeMapper {
     }
 
     public Employee dtoToEntity(EmployeeDto employeeDto) {
+
+        if (employeeDto == null){
+            throw new IllegalArgumentException();
+        }
+
         Employee employee = new Employee();
 
         employee.setId(employeeDto.getId());
         employee.setFirstName(employeeDto.getFirstName());
         employee.setLastName(employeeDto.getLastName());
         employee.setDateOfBirth(employeeDto.getDateOfBirth());
-        employee.setEmail(employee.getEmail());
-        employee.setGender(employee.getGender());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setGender(employeeDto.getGender());
         employee.setActive(employeeDto.getActive());
         employee.setPositionId(employeeDto.getPositionId());
         employee.setDepartmentId(employeeDto.getDepartmentId());

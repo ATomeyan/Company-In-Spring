@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final Logger logger = (Logger) LoggerFactory.getLogger("");
+    private final Logger logger = (Logger) LoggerFactory.getLogger("company");
     private final EmployeeMapper employeeMapper = new EmployeeMapper();
     private final EmployeeRepository repository;
 
@@ -44,12 +44,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = repository.getById(id);
 
         if (employee == null) {
-            logger.info("Employee by Id " + id + " not found.");
+            logger.error("Employee by id not found. {}", id);
             throw new NotFoundException("Employee by Id " + id + " not found.");
         }
 
         return employeeMapper.entityToDto(employee);
-
     }
 
     @Override
@@ -61,23 +60,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto update(Integer id, EmployeeDto employeeDto) {
 
-        Optional<Employee> emp = repository.findById(id);
-        EmployeeDto newEmployee = new EmployeeDto();
-
-        if (emp.isPresent()) {
-
-            newEmployee.setId(employeeDto.getId());
-            newEmployee.setFirstName(employeeDto.getFirstName());
-            newEmployee.setLastName(employeeDto.getLastName());
-            newEmployee.setDateOfBirth(employeeDto.getDateOfBirth());
-            newEmployee.setEmail(employeeDto.getEmail());
-            newEmployee.setGender(employeeDto.getGender());
-            newEmployee.setActive(employeeDto.getActive());
-            newEmployee.setPositionId(employeeDto.getPositionId());
-            newEmployee.setDepartmentId(employeeDto.getDepartmentId());
+        if (id == null || id <= 0) {
+            logger.info("");
+            throw new IllegalArgumentException();
         }
 
-        return newEmployee;
+        Employee employee = repository.getById(id);
+        if (employee == null) {
+            logger.error("Employee does not found. {} ", employee);
+            throw new NotFoundException("Employee does not found");
+        }
+
+        Employee e = repository.save(employeeMapper.dtoToEntity(employeeDto));
+
+        return employeeMapper.entityToDto(e);
     }
 
     @Override
@@ -104,29 +100,3 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees;
     }
 }
-
-/**
- * @Transactional
- * public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
- *     if (!EmployeeValidation.isValid(employeeDto) || employeeDto.getEmployeeId() == null || employeeDto.getEmployeeId() <= 0) {
- *         LOGGER.error("The employee {} is not a valid employee", employeeDto);
- *         throw new NotValidException("The employee " + employeeDto + " is not a valid employee");
- *     }
- *
- *     Employee employee = employeeRepository.findById(employeeDto.getEmployeeId()).orElse(null);
- *     if (employee == null) {
- *         LOGGER.info("The employee {} was not found", employeeDto);
- *         throw new NotFoundException("The employee " + employeeDto + " was not found");
- *     }
- *
- *     List<Employee> employees = employeeRepository.findAllByCriteria(new Employee(employeeDto.getFName(),
- *     employeeDto.getLName(), employeeDto.getBirthday())).orElse(null);
- *
- *     if (employees != null && !employees.isEmpty()) {
- *         LOGGER.warn("The employee {} exists", employeeDto);
- *         throw new AlreadyExistsException("The employee " + employeeDto + " exists");
- *     }
- *
- *     return employeeMapper.toDto(employeeRepository.save(employeeMapper.toEntity(employeeDto)));
- * }
- */
