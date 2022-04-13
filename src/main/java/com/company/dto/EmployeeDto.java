@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 public class EmployeeDto implements Serializable {
+
     private Integer id;
     private String firstName;
     private String lastName;

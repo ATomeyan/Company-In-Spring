@@ -14,5 +14,5 @@ public interface EmployeeService {
 
     EmployeeDto update(Integer id, EmployeeDto employeeDto);
 
-    EmployeeDto deleteEmployee(Integer id);
+    void deleteEmployee(Integer id);
 }

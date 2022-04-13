@@ -5,6 +5,7 @@ import com.company.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,8 +55,8 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeDto> deleteEmployee(@PathVariable Integer id) {
 
-        EmployeeDto employeeDto = service.deleteEmployee(id);
+        service.deleteEmployee(id);
 
-        return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
