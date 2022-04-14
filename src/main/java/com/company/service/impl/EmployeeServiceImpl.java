@@ -101,7 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if (employee == null) {
             LOGGER.error("Employee does not found: {} ", id);
-            throw new NotFoundException("Employee does not found: {}");
+            throw new NotFoundException("Employee does not found.");
         }
 
         repository.deleteById(id);

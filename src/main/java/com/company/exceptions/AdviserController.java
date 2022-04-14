@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class AdviserController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotValidException.class)
-    public ResponseEntity<Object> handleEmployeeNotValidException(NotValidException e) {
+    public ResponseEntity<Object> handleNotValidException(NotValidException e) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse();
 
@@ -25,7 +25,7 @@ public class AdviserController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<Object> handleEmployeeAlreadyExistException(AlreadyExistsException e){
+    public ResponseEntity<Object> handleAlreadyExistException(AlreadyExistsException e){
         ExceptionResponse exceptionResponse = new ExceptionResponse();
 
         exceptionResponse.setDateTime(LocalDateTime.now());
@@ -37,25 +37,12 @@ public class AdviserController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleEmployeeNotFoundException(NotFoundException e){
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException e){
         ExceptionResponse exceptionResponse = new ExceptionResponse();
 
         exceptionResponse.setDateTime(LocalDateTime.now());
         exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         exceptionResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
-        exceptionResponse.setMessage(e.getMessage());
-
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleRecordNotFoundException(NotFoundException e){
-
-        ExceptionResponse exceptionResponse = new ExceptionResponse();
-
-        exceptionResponse.setDateTime(LocalDateTime.now());
-        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        exceptionResponse.setError(HttpStatus.BAD_GATEWAY.getReasonPhrase());
         exceptionResponse.setMessage(e.getMessage());
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
