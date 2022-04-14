@@ -72,4 +72,5 @@ public class AttendanceRecord {
                 ", employee=" + employee +
                 '}';
     }
+
 }
