@@ -1,8 +1,10 @@
 package com.company.service.impl;
 
+import com.company.dto.PositionDto;
 import com.company.entity.Position;
 import com.company.repository.PositionRepository;
 import com.company.service.PositionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,17 +15,13 @@ public class PositionServiceImpl implements PositionService {
 
     private final PositionRepository repository;
 
+    @Autowired
     public PositionServiceImpl(PositionRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public Position getPositionById(int id) {
-        return repository.getById(id);
-    }
-
-    @Override
-    public List<Position> getAllPosition() {
+    public List<PositionDto> getAllPosition() {
         List<Position> positions = new ArrayList<>();
         Iterable<Position> iterable = repository.findAll();
 
@@ -35,7 +33,7 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public Position getPositionByName(String name) {
+    public PositionDto getPositionByName(String name) {
         return repository.findPositionByName(name);
     }
 }
