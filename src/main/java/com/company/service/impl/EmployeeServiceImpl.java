@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto getEmployeeById(Integer id) {
 
         if (id == null || id <= 0) {
-            LOGGER.info("Id can't be null or less than 0: {}", id);
+            LOGGER.warn("Id can't be null or less than 0: {}", id);
             throw new NotValidException("Id can't be null or less than 0.");
         }
 
@@ -73,8 +73,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto updateEmployee(Integer id, EmployeeDto employeeDto) {
 
         if (id == null || id <= 0) {
-            LOGGER.info("Id can't be null or less than 0: {}", id);
-            throw new IllegalArgumentException("Id can't be null or less than 0.");
+            LOGGER.warn("Id can't be null or less than 0: {}", id);
+            throw new NotValidException("Id can't be null or less than 0.");
         }
 
         Employee employee = repository.findById(id).orElse(null);
@@ -93,8 +93,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(Integer id) {
 
         if (id == null || id <= 0) {
-            LOGGER.error("Id can't be null or less than 0 {}", id);
-            throw new IllegalArgumentException("Id can't be null or less than 0.");
+            LOGGER.warn("Id can't be null or less than 0 {}", id);
+            throw new NotValidException("Id can't be null or less than 0.");
         }
 
         Employee employee = repository.findById(id).orElse(null);
