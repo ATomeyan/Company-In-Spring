@@ -139,5 +139,4 @@ public class Employee {
                 ", departmentId=" + departmentId +
                 '}';
     }
-
 }
