@@ -55,10 +55,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 
-        List<Employee> employees = repository.findByCriteria(new Employee(employeeDto.getId(),
-                employeeDto.getFirstName(), employeeDto.getLastName(), employeeDto.getDateOfBirth(), employeeDto.getEmail(),
-                employeeDto.getGender(), employeeDto.getActive(), employeeDto.getPositionId(),
-                employeeDto.getDepartmentId())).orElse(null);
+        Employee e = new Employee();
+
+        e.setFirstName(employeeDto.getFirstName());
+        e.setLastName(employeeDto.getLastName());
+        e.setDateOfBirth(employeeDto.getDateOfBirth());
+        e.setEmail(employeeDto.getEmail());
+
+        List<Employee> employees = repository.findByCriteria(e).orElse(null);
 
         if (employees != null && !employees.isEmpty()) {
             LOGGER.warn("Employee {} already exist: ", employeeDto);

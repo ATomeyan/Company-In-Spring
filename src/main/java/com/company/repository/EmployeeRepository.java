@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
     @Query("from Employee where active=true")
     @Override
     List<Employee> findAll();
 
     @Query("from Employee where firstName=:#{#employee.firstName} and lastName=:#{#employee.lastName} and " +
-            "dateOfBirth=:#{#employee.dateOfBirth} and email=:#{#employee.email} and gender=:#{#employee.gender} and " +
-            "active=true")
+            "dateOfBirth=:#{#employee.dateOfBirth} and email=:#{#employee.email} and active=true")
     Optional<List<Employee>> findByCriteria(Employee employee);
 
     @Query("from Employee where id=:id and active=true")

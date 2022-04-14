@@ -1,9 +1,5 @@
-package com.company.controller;
+package com.company.exceptions;
 
-import com.company.exceptions.AlreadyExistsException;
-import com.company.exceptions.ExceptionResponse;
-import com.company.exceptions.NotFoundException;
-import com.company.exceptions.NotValidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
