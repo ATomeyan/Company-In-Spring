@@ -39,14 +39,14 @@ public class EmployeeController {
     @PostMapping("/add")
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto employeeDto) {
 
-        EmployeeDto employee = service.saveEmployee(employeeDto);
+        EmployeeDto employee = service.addEmployee(employeeDto);
 
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<EmployeeDto> editEmployee(@PathVariable(name = "id") Integer id, @RequestBody EmployeeDto employeeDto) {
-        EmployeeDto employee = service.update(id, employeeDto);
+        EmployeeDto employee = service.updateEmployee(id, employeeDto);
 
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class AdviserController extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({NotValidException.class})
+    @ExceptionHandler(NotValidException.class)
     public ResponseEntity<Object> handleEmployeeNotValidException(NotValidException e) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse();
@@ -43,6 +43,19 @@ public class AdviserController extends ResponseEntityExceptionHandler {
         exceptionResponse.setDateTime(LocalDateTime.now());
         exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         exceptionResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        exceptionResponse.setMessage(e.getMessage());
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Object> handleRecordNotFoundException(NotFoundException e){
+
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+
+        exceptionResponse.setDateTime(LocalDateTime.now());
+        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        exceptionResponse.setError(HttpStatus.BAD_GATEWAY.getReasonPhrase());
         exceptionResponse.setMessage(e.getMessage());
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);

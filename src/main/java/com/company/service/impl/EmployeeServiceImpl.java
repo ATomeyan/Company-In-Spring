@@ -20,12 +20,13 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EmployeeServiceImpl.class);
-    private final EmployeeMapper employeeMapper = new EmployeeMapper();
+    private final EmployeeMapper employeeMapper;
     private final EmployeeRepository repository;
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository repository) {
         this.repository = repository;
+        employeeMapper = new EmployeeMapper();
     }
 
     @Override
@@ -53,16 +54,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
+    public EmployeeDto addEmployee(EmployeeDto employeeDto) {
 
-        Employee e = new Employee();
-
-        e.setFirstName(employeeDto.getFirstName());
-        e.setLastName(employeeDto.getLastName());
-        e.setDateOfBirth(employeeDto.getDateOfBirth());
-        e.setEmail(employeeDto.getEmail());
-
-        List<Employee> employees = repository.findByCriteria(e).orElse(null);
+        List<Employee> employees = repository.findByCriteria(employeeMapper.dtoToEntity(employeeDto)).orElse(null);
 
         if (employees != null && !employees.isEmpty()) {
             LOGGER.warn("Employee {} already exist: ", employeeDto);
@@ -70,12 +64,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         Employee employee = repository.save(employeeMapper.dtoToEntity(employeeDto));
+        LOGGER.info("Employee {} saved successfully: ", employee);
 
         return employeeMapper.entityToDto(employee);
     }
 
     @Override
-    public EmployeeDto update(Integer id, EmployeeDto employeeDto) {
+    public EmployeeDto updateEmployee(Integer id, EmployeeDto employeeDto) {
 
         if (id == null || id <= 0) {
             LOGGER.info("Id can't be null or less than 0: {}", id);
@@ -89,6 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         Employee e = repository.save(employeeMapper.dtoToEntity(employeeDto));
+        LOGGER.info("Employee by id {} updated.", id);
 
         return employeeMapper.entityToDto(e);
     }

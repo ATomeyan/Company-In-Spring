@@ -1,12 +1,12 @@
 package com.company.service;
 
-import com.company.entity.Department;
+import com.company.dto.DepartmentDto;
 
 import java.util.List;
 
 public interface DepartmentService {
 
-    List<Department> getAllDepartments();
+    List<DepartmentDto> getAllDepartments();
 
-    Department getByName(String name);
+    DepartmentDto getByName(String name);
 }

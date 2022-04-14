@@ -1,11 +1,11 @@
 package com.company.service;
 
-import com.company.entity.AttendanceRecord;
+import com.company.dto.AttendanceRecordDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AttendanceRecordService {
 
-    List<AttendanceRecord> getByDateTimeAndName(LocalDateTime entranceDate, LocalDateTime exitDate, String departmentName);
+    List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, LocalDateTime exitDate);
 }

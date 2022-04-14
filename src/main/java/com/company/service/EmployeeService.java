@@ -10,9 +10,9 @@ public interface EmployeeService {
 
     EmployeeDto getEmployeeById(Integer id);
 
-    EmployeeDto saveEmployee(EmployeeDto employeeDto);
+    EmployeeDto addEmployee(EmployeeDto employeeDto);
 
-    EmployeeDto update(Integer id, EmployeeDto employeeDto);
+    EmployeeDto updateEmployee(Integer id, EmployeeDto employeeDto);
 
     void deleteEmployee(Integer id);
 }
