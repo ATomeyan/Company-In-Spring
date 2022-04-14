@@ -29,8 +29,8 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
 
     @Override
     public List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, LocalDateTime exitDate) {
-
-
+        // TODO:
+        return null;
     }
 
     private List<AttendanceRecordDto> getRecordDto(List<AttendanceRecord> record) {

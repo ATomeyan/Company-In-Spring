@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class AttendanceRecordDto implements Serializable {
+
     private int id;
     private LocalDateTime entranceTime;
     private LocalDateTime exitTime;

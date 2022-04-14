@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface AttendanceRecordRepository extends JpaRepository<AttendanceRecord, Integer> {
 
-    @Query("from AttendanceRecord where exitTime = :entranceDate and exitTime = :exitDate")
-    List<AttendanceRecord> findRecordByEntranceTimeAndDepartmentName(
+    @Query("from AttendanceRecord where entranceTime = :entranceDate and exitTime = :exitDate")
+    List<AttendanceRecord> findRecordByDateTime(
             @Param("entranceDate") LocalDateTime entranceDate,
             @Param("exitDate") LocalDateTime exitDate);
 }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class PositionDto implements Serializable {
+
     private int id;
     private String name;
 }
