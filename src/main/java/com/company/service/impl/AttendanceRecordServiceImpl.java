@@ -3,6 +3,7 @@ package com.company.service.impl;
 import ch.qos.logback.classic.Logger;
 import com.company.dto.AttendanceRecordDto;
 import com.company.entity.AttendanceRecord;
+import com.company.exceptions.NotFoundException;
 import com.company.exceptions.NotValidException;
 import com.company.mapper.AttendanceRecordMapper;
 import com.company.repository.AttendanceRecordRepository;
@@ -29,26 +30,31 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, String name) {
+    public List<AttendanceRecordDto> getByDateTime(LocalDateTime dateTime, String name) {
 
-        if (entranceDate == null || name.isEmpty()){
-            LOGGER.error("");
-            throw new NotValidException();
+        if (dateTime == null || name.isEmpty()){
+            LOGGER.error("The date time {} or name {} is not valid. ", dateTime, name);
+            throw new NotValidException("The date time or name is not valid.");
         }
 
+        List<AttendanceRecord> records = repository.findRecordByDateTime(dateTime, name).orElse(null);
+        if (records == null || records.isEmpty()){
+            LOGGER.error("Records is not found {}. ", records);
+            throw new NotFoundException("Records is not found.");
+        }
 
-        return getRecordDto(repository.findRecordByDateTime(entranceDate, name));
+        return getRecordDto(records);
     }
 
-    private List<AttendanceRecordDto> getRecordDto(List<AttendanceRecord> record) {
+    private List<AttendanceRecordDto> getRecordDto(List<AttendanceRecord> records) {
 
-        List<AttendanceRecordDto> records = new ArrayList<>();
+        List<AttendanceRecordDto> dtoList = new ArrayList<>();
 
-        for (AttendanceRecord r : record) {
+        for (AttendanceRecord r : records) {
             AttendanceRecordDto recordDto = recordMapper.entityToDto(r);
-            records.add(recordDto);
+            dtoList.add(recordDto);
         }
 
-        return records;
+        return dtoList;
     }
 }

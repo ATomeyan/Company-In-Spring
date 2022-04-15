@@ -8,11 +8,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface AttendanceRecordRepository extends JpaRepository<AttendanceRecord, Integer> {
 
     @Query("from AttendanceRecord r inner join Department d where r.entranceTime = :entranceDate and d.name = :departmentName")
-    List<AttendanceRecord> findRecordByDateTime(
+    Optional<List<AttendanceRecord>> findRecordByDateTime(
             @Param("entranceDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime entranceDate,
             @Param("departmentName") String name);
 }

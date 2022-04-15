@@ -105,6 +105,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         repository.deleteById(id);
+
         LOGGER.info("Employee by id {} removed: ", id);
     }
 
