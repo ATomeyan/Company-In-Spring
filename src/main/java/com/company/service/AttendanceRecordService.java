@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface AttendanceRecordService {
 
-    List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, LocalDateTime exitDate);
+    List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, String name);
 }

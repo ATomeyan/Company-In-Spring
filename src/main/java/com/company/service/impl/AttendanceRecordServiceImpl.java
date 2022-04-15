@@ -3,6 +3,7 @@ package com.company.service.impl;
 import ch.qos.logback.classic.Logger;
 import com.company.dto.AttendanceRecordDto;
 import com.company.entity.AttendanceRecord;
+import com.company.exceptions.NotValidException;
 import com.company.mapper.AttendanceRecordMapper;
 import com.company.repository.AttendanceRecordRepository;
 import com.company.service.AttendanceRecordService;
@@ -28,9 +29,15 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, LocalDateTime exitDate) {
-        // TODO:
-        return null;
+    public List<AttendanceRecordDto> getByDateTime(LocalDateTime entranceDate, String name) {
+
+        if (entranceDate == null || name.isEmpty()){
+            LOGGER.error("");
+            throw new NotValidException();
+        }
+
+
+        return getRecordDto(repository.findRecordByDateTime(entranceDate, name));
     }
 
     private List<AttendanceRecordDto> getRecordDto(List<AttendanceRecord> record) {
