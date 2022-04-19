@@ -37,7 +37,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto employeeDto) {
 
         EmployeeDto employee = service.addEmployee(employeeDto);
@@ -45,7 +45,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<EmployeeDto> editEmployee(@PathVariable(name = "id") Integer id, @RequestBody EmployeeDto employeeDto) {
         EmployeeDto employee = service.updateEmployee(id, employeeDto);
 
