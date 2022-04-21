@@ -32,7 +32,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto getByName(String name){
+    public DepartmentDto getByDepartmentName(String name){
 
         if (name == null || name.isEmpty()){
             LOGGER.error("Department name is not valid {}.", name);
