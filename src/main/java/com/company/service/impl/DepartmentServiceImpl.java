@@ -32,15 +32,15 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto getByDepartmentName(String name){
+    public DepartmentDto getByDepartmentName(String name) {
 
-        if (name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             LOGGER.error("Department name is not valid {}.", name);
             throw new NotValidException("Department name is not valid.");
         }
 
         Department department = repository.findDepartmentByName(name).orElse(null);
-        if (department == null){
+        if (department == null) {
             LOGGER.error("Department by name {} is not found.", name);
             throw new NotFoundException("Department is not found.");
         }
