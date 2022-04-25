@@ -23,7 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Override
     Optional<Employee> findById(@Param("id") Integer id);
 
-    @Query("update Employee set active=false where id=:id")
+    @Query("update Employee set active=false where id=:id and active=true")
     @Modifying
     @Override
     void deleteById(@Param("id") Integer id);
