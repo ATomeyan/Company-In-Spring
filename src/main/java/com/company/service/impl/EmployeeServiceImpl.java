@@ -12,6 +12,7 @@ import com.company.service.EmployeeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public List<EmployeeDto> getAllEmployees() {
 
         return getEmployeeDto(repository.findAll());
     }
 
     @Override
+    @Transactional
     public EmployeeDto getEmployeeById(Integer id) {
 
         if (id == null || id <= 0) {
@@ -54,6 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public EmployeeDto addEmployee(EmployeeDto employeeDto) {
 
         List<Employee> employees = repository.findByCriteria(employeeMapper.dtoToEntity(employeeDto)).orElse(null);
@@ -70,6 +74,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public EmployeeDto updateEmployee(Integer id, EmployeeDto employeeDto) {
 
         if (id == null || id <= 0) {
@@ -90,6 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public void deleteEmployee(Integer id) {
 
         if (id == null || id <= 0) {
