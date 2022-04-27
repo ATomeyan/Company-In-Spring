@@ -2,6 +2,7 @@ package com.company.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "employee")
@@ -31,17 +32,17 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "position_id")
-    private Position positionId;
+    private Position position;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
-    private Department departmentId;
+    private Department department;
 
     public Employee() {
     }
 
     public Employee(Integer id, String firstName, String lastName, LocalDate dateOfBirth, String email, String gender,
-                    Boolean active, Position positionId, Department departmentId) {
+                    Boolean active, Position position, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,8 +50,8 @@ public class Employee {
         this.email = email;
         this.gender = gender;
         this.active = active;
-        this.positionId = positionId;
-        this.departmentId = departmentId;
+        this.position = position;
+        this.department = department;
     }
 
     public Integer getId() {
@@ -109,20 +110,37 @@ public class Employee {
         this.active = active;
     }
 
-    public Position getPositionId() {
-        return positionId;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setPositionId(Position positionId) {
-        this.positionId = positionId;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
-    public Department getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(id, employee.id) && Objects.equals(firstName, employee.firstName) &&
+                Objects.equals(lastName, employee.lastName) && Objects.equals(dateOfBirth, employee.dateOfBirth) &&
+                Objects.equals(email, employee.email) && Objects.equals(gender, employee.gender) &&
+                Objects.equals(active, employee.active) && Objects.equals(position, employee.position) &&
+                Objects.equals(department, employee.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, dateOfBirth, email, gender, active, position, department);
     }
 
     @Override
@@ -135,8 +153,8 @@ public class Employee {
                 ", email='" + email + '\'' +
                 ", gender='" + gender + '\'' +
                 ", active=" + active +
-                ", positionId=" + positionId +
-                ", departmentId=" + departmentId +
+                ", position=" + position +
+                ", department=" + department +
                 '}';
     }
 }

@@ -19,8 +19,8 @@ public class EmployeeMapper {
         employeeDto.setDateOfBirth(employee.getDateOfBirth());
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setGender(employee.getGender());
-        employeeDto.setPositionId(employee.getPositionId());
-        employeeDto.setDepartmentId(employee.getDepartmentId());
+        employeeDto.setPosition(employee.getPosition());
+        employeeDto.setDepartment(employee.getDepartment());
 
         return employeeDto;
     }
@@ -40,8 +40,8 @@ public class EmployeeMapper {
         employee.setEmail(employeeDto.getEmail());
         employee.setGender(employeeDto.getGender());
         employee.setActive(employeeDto.getActive());
-        employee.setPositionId(employeeDto.getPositionId());
-        employee.setDepartmentId(employeeDto.getDepartmentId());
+        employee.setPosition(employeeDto.getPosition());
+        employee.setDepartment(employeeDto.getDepartment());
 
         return employee;
     }

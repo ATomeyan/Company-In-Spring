@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "attendance_record")
@@ -21,7 +22,7 @@ public class AttendanceRecord {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime exitTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
@@ -65,6 +66,20 @@ public class AttendanceRecord {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AttendanceRecord that = (AttendanceRecord) o;
+        return Objects.equals(id, that.id) && Objects.equals(entranceTime, that.entranceTime) &&
+                Objects.equals(exitTime, that.exitTime) && Objects.equals(employee, that.employee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, entranceTime, exitTime, employee);
     }
 
     @Override

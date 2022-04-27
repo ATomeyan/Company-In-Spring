@@ -19,6 +19,6 @@ public class EmployeeDto implements Serializable {
     private String email;
     private String gender;
     private Boolean active;
-    private transient Position positionId;
-    private transient Department departmentId;
+    private Position position;
+    private Department department;
 }
