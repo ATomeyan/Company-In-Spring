@@ -19,6 +19,7 @@ public class EmployeeMapper {
         employeeDto.setDateOfBirth(employee.getDateOfBirth());
         employeeDto.setEmail(employee.getEmail());
         employeeDto.setGender(employee.getGender());
+        employeeDto.setActive(employee.isActive()); //
         employeeDto.setPosition(employee.getPosition());
         employeeDto.setDepartment(employee.getDepartment());
 
