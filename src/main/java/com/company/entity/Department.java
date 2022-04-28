@@ -1,6 +1,8 @@
 package com.company.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,10 +16,14 @@ public class Department {
     @Column(name = "name")
     private String name;
 
+    @OneToMany
+    private List<Employee> employees = new ArrayList<>();
+
     public Department() {
     }
 
-    public Department(Integer id, String name) {
+    public Department(Integer id, String name, List<Employee> employees) {
+        this.employees = employees;
         this.id = id;
         this.name = name;
     }
@@ -57,5 +63,13 @@ public class Department {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }
