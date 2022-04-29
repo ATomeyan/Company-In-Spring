@@ -42,10 +42,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public List<EmployeeDto> getAllEmployees() {
 
-        List<Position> positions = positionRepository.findAll();
-        List<Department> departments = departmentRepository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
 
-        return getEmployeeDto(employeeRepository.findAll());
+        for (Employee e : employees) {
+            if (e.getPosition().getId() != null) {
+                Position p = positionRepository.getById(e.getPosition().getId());
+                if (p != null) {
+                    e.setPosition(p);
+                }
+            }
+
+            if (e.getDepartment().getId() != null) {
+                Department d = departmentRepository.getById(e.getDepartment().getId());
+                if (d != null) {
+                    e.setDepartment(d);
+                }
+            }
+        }
+
+        return getEmployeeDto(employees);
     }
 
     @Override

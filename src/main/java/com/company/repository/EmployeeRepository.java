@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-    @Query("from Employee where active=true")
+    @Query("from Employee e join fetch Position p on p.id = e.position.id join fetch Department d on d.id = e.department.id where e.active=true")
     @Override
     List<Employee> findAll();
 
