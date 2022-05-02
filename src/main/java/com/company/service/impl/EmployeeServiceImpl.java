@@ -93,7 +93,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new AlreadyExistsException("Employee already exist.");
         }
 
+        employeeDto.setActive(true);
         Employee employee = employeeRepository.save(employeeMapper.dtoToEntity(employeeDto));
+
         LOGGER.info("Employee {} saved successfully: ", employee);
 
         return employeeMapper.entityToDto(employee);
