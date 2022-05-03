@@ -116,6 +116,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new NotFoundException("Employee does not found");
         }
 
+        employeeDto.setActive(true);
         Employee e = employeeRepository.save(employeeMapper.dtoToEntity(employeeDto));
         LOGGER.info("Employee by id {} updated.", id);
 
