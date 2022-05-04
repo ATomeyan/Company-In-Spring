@@ -30,14 +30,14 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public List<AttendanceRecordDto> getByDateTime(LocalDateTime dateTime, String name) {
+    public List<AttendanceRecordDto> getByDateTime(LocalDateTime from, LocalDateTime to, Integer depId) {
 
-        if (dateTime == null || name.isEmpty()){
-            LOGGER.error("The date time {} or name {} is not valid. ", dateTime, name);
+        if (from == null || depId <= 0){
+            LOGGER.error("The date time {} or name {} is not valid. ", from, depId);
             throw new NotValidException("The date time or name is not valid.");
         }
 
-        List<AttendanceRecord> records = repository.findRecordByDateTime(dateTime, name).orElse(null);
+        List<AttendanceRecord> records = repository.findRecordByCriteria(from, to, depId).orElse(null);
         if (records == null || records.isEmpty()){
             LOGGER.error("Records is not found {}. ", records);
             throw new NotFoundException("Records is not found.");

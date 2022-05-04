@@ -22,11 +22,22 @@ public class AttendanceRecordController {
         this.service = service;
     }
 
-    @GetMapping("/{date}/{name}")
-    public ResponseEntity<List<AttendanceRecordDto>> getByDate(@PathVariable("date") LocalDateTime dateTime, @PathVariable("name") String name){
+    @PostMapping("/{date}/{depId}")
+    public ResponseEntity<List<AttendanceRecordDto>> getByCriteria(@PathVariable("date") LocalDateTime from,
+                                                                   @PathVariable("date") LocalDateTime to,
+                                                                   @PathVariable("depId") Integer depId){
 
-        List<AttendanceRecordDto> dto = service.getByDateTime(dateTime, name);
+        List<AttendanceRecordDto> dto = service.getByDateTime(from, to, depId);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<List<AttendanceRecordDto>> getBy(@PathVariable("from") LocalDateTime from,
+                                                           @PathVariable("to") LocalDateTime to,
+                                                           @PathVariable("empId") Integer empId){
+
+//        List<AttendanceRecordDto> dto = service.
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

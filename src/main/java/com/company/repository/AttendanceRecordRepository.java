@@ -12,8 +12,9 @@ import java.util.Optional;
 
 public interface AttendanceRecordRepository extends JpaRepository<AttendanceRecord, Integer> {
 
-    @Query("from AttendanceRecord r join Department d where r.entranceTime = :entranceDate and d.name = :departmentName")
-    Optional<List<AttendanceRecord>> findRecordByDateTime(
-            @Param("entranceDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime entranceDate,
-            @Param("departmentName") String name);
+    @Query("from AttendanceRecord r join Department d where r.entranceTime = :entranceDate and d.id = :depId")
+    Optional<List<AttendanceRecord>> findRecordByCriteria(
+            @Param("entranceDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
+            @Param("entranceDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+            @Param("depId") Integer depId);
 }
