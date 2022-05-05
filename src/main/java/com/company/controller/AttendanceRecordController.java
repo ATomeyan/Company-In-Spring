@@ -22,10 +22,10 @@ public class AttendanceRecordController {
         this.service = service;
     }
 
-    @PostMapping("/{date}/{depId}")
-    public ResponseEntity<List<AttendanceRecordDto>> getByCriteria(@PathVariable("date") LocalDateTime from,
-                                                                   @PathVariable("date") LocalDateTime to,
-                                                                   @PathVariable("depId") Integer depId){
+    @GetMapping("/{from}/{to}/{depId}")
+    public ResponseEntity<List<AttendanceRecordDto>> getByCriteria(@PathVariable("from") LocalDateTime from,
+                                                                   @PathVariable("to") LocalDateTime to,
+                                                                   @PathVariable("depId") Integer depId) {
 
         List<AttendanceRecordDto> dto = service.getByDateTime(from, to, depId);
 
@@ -35,7 +35,7 @@ public class AttendanceRecordController {
     @PostMapping
     public ResponseEntity<List<AttendanceRecordDto>> getBy(@PathVariable("from") LocalDateTime from,
                                                            @PathVariable("to") LocalDateTime to,
-                                                           @PathVariable("empId") Integer empId){
+                                                           @PathVariable("empId") Integer empId) {
 
 //        List<AttendanceRecordDto> dto = service.
         return new ResponseEntity<>(HttpStatus.OK);

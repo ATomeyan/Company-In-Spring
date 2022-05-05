@@ -1,7 +1,5 @@
 package com.company.dto;
 
-import com.company.entity.Department;
-import com.company.entity.Position;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +17,6 @@ public class EmployeeDto implements Serializable {
     private String email;
     private String gender;
     private Boolean active;
-    private Position position;
-    private Department department;
+    private PositionDto position;
+    private DepartmentDto department;
 }
