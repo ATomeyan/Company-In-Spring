@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface AttendanceRecordRepository extends JpaRepository<AttendanceRecord, Integer> {
 
-    @Query("from AttendanceRecord r join Department d on r.entranceTime >= :from and r.exitTime <= :to and d.id = :depId")
+    @Query("FROM AttendanceRecord r join Department d on d.id=:depId where r.entranceTime BETWEEN :from AND :to")
     Optional<List<AttendanceRecord>> findRecordByCriteria(
             @Param("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
             @Param("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
