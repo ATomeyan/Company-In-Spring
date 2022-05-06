@@ -22,7 +22,7 @@ public class AttendanceRecordController {
         this.service = service;
     }
 
-    @PostMapping("/{from}/{to}/{depId}")
+    @GetMapping("/{from}/{to}/{depId}")
     public ResponseEntity<List<AttendanceRecordDto>> getByCriteria(@PathVariable("from") LocalDateTime from,
                                                                    @PathVariable("to") LocalDateTime to,
                                                                    @PathVariable("depId") Integer depId) {
@@ -30,25 +30,5 @@ public class AttendanceRecordController {
         List<AttendanceRecordDto> dto = service.getByDateTime(from, to, depId);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<AttendanceRecordDto>> getRecords(){
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<List<AttendanceRecordDto>> countByCriteria(@PathVariable("from") LocalDateTime from,
-                                                           @PathVariable("to") LocalDateTime to,
-                                                           @PathVariable("empId") Integer empId) {
-
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<AttendanceRecordDto> getCounter(){
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -11,16 +11,23 @@ public class EmployeeMapper {
 
     public EmployeeDto entityToDto(Employee employee) {
 
+        DepartmentDto departmentDto = new DepartmentDto();
+        PositionDto positionDto = new PositionDto();
+
         if (employee == null){
             throw new IllegalArgumentException();
         }
 
-        DepartmentDto departmentDto = new DepartmentDto();
+        if (departmentDto == null){
+            throw new IllegalArgumentException();
+        }
 
         departmentDto.setId(employee.getDepartment().getId());
         departmentDto.setName(employee.getDepartment().getName());
 
-        PositionDto positionDto = new PositionDto();
+        if (positionDto == null){
+            throw new IllegalArgumentException();
+        }
 
         positionDto.setId(employee.getPosition().getId());
         positionDto.setName(employee.getPosition().getName());

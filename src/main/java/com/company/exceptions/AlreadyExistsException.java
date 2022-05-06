@@ -1,6 +1,6 @@
 package com.company.exceptions;
 
-public class AlreadyExistsException extends RuntimeException{
+public class AlreadyExistsException extends RuntimeException {
 
     public AlreadyExistsException() {
         super();

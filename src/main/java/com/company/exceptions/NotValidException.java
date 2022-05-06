@@ -1,6 +1,6 @@
 package com.company.exceptions;
 
-public class NotValidException extends RuntimeException{
+public class NotValidException extends RuntimeException {
 
     public NotValidException() {
         super();
