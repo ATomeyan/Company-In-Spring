@@ -1,11 +1,11 @@
 package com.company.service;
 
 import com.company.dto.AttendanceRecordDto;
+import com.company.dto.RecordsDepartmentDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AttendanceRecordService {
 
-    List<AttendanceRecordDto> getByDateTime(LocalDateTime from, LocalDateTime to, Integer depId);
+    List<AttendanceRecordDto> getRecordsByCriteria(RecordsDepartmentDto recordsDepartmentDto);
 }

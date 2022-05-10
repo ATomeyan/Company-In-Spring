@@ -1,7 +1,5 @@
 package com.company.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -15,11 +13,9 @@ public class AttendanceRecord {
     private Integer id;
 
     @Column(name = "entrance_time")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime entranceTime;
 
     @Column(name = "exit_time")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime exitTime;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -14,18 +14,18 @@ public class EmployeeMapper {
         DepartmentDto departmentDto = new DepartmentDto();
         PositionDto positionDto = new PositionDto();
 
-        if (employee == null){
+        if (employee == null) {
             throw new IllegalArgumentException();
         }
 
-        if (departmentDto == null){
+        if (departmentDto == null) {
             throw new IllegalArgumentException();
         }
 
         departmentDto.setId(employee.getDepartment().getId());
         departmentDto.setName(employee.getDepartment().getName());
 
-        if (positionDto == null){
+        if (positionDto == null) {
             throw new IllegalArgumentException();
         }
 
@@ -49,7 +49,7 @@ public class EmployeeMapper {
 
     public Employee dtoToEntity(EmployeeDto employeeDto) {
 
-        if (employeeDto == null){
+        if (employeeDto == null) {
             throw new IllegalArgumentException();
         }
 
