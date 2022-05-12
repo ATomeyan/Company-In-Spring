@@ -1,6 +1,7 @@
 package com.company.controller;
 
 import com.company.dto.AttendanceRecordDto;
+import com.company.dto.AttendanceRecordTimeDto;
 import com.company.dto.RecordsDepartmentDto;
 import com.company.service.AttendanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,17 @@ public class AttendanceRecordController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/search")
     public ResponseEntity<List<AttendanceRecordDto>> getByCriteria(@RequestBody RecordsDepartmentDto recordsDepartmentDto) {
 
         List<AttendanceRecordDto> dto = service.getRecordsByCriteria(recordsDepartmentDto);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @PostMapping("/count")
+    public ResponseEntity<AttendanceRecordTimeDto> getTimeCounter(@RequestBody RecordsDepartmentDto recordsDepartmentDto) {
+        AttendanceRecordTimeDto dto = service.getRecordTimeCounter(recordsDepartmentDto);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

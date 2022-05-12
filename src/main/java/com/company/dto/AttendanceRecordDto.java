@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 public class AttendanceRecordDto implements Serializable {
 
-    private int id;
+    private Integer id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime entranceTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
