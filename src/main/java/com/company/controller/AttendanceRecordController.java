@@ -32,8 +32,8 @@ public class AttendanceRecordController {
     }
 
     @PostMapping("/count")
-    public ResponseEntity<List<AttendanceRecordTimeDto>> getTimeCounter(@RequestBody RecordsDepartmentDto recordsDepartmentDto) {
-        List<AttendanceRecordTimeDto> dto = service.getRecordTimeCounter(recordsDepartmentDto);
+    public ResponseEntity<AttendanceRecordTimeDto> getTimeCounter(@RequestBody RecordsDepartmentDto recordsDepartmentDto) {
+        AttendanceRecordTimeDto dto = service.getRecordTimeCounter(recordsDepartmentDto);
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

@@ -6,6 +6,8 @@ import com.company.entity.AttendanceRecord;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AttendanceRecordTimeMapper {
 
@@ -26,14 +28,12 @@ public class AttendanceRecordTimeMapper {
 
     private String getTime(LocalDateTime from, LocalDateTime to) {
 
+        List<Long> hours = new ArrayList<>();
         Duration duration = Duration.between(from, to);
-        long h = duration.toHours() + duration.toMinutes() + duration.getSeconds();
+        long h = duration.toHours();
+        hours.add(h);
 
-        long hours = ChronoUnit.HOURS.between(from, to);
-        long minutes = ChronoUnit.MINUTES.between(from, to) % 60;
-        long s = ChronoUnit.SECONDS.between(from, to) % 60;
-
-        return h + ":";
+        return hours + ":";
     }
 }
 /*

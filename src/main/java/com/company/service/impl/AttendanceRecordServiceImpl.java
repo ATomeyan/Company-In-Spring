@@ -54,7 +54,7 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public List<AttendanceRecordTimeDto> getRecordTimeCounter(RecordsDepartmentDto recordsDepartmentDto) {
+    public AttendanceRecordTimeDto getRecordTimeCounter(RecordsDepartmentDto recordsDepartmentDto) {
 
         if (recordsDepartmentDto == null) {
             LOGGER.error("The date time {} is not valid. ", recordsDepartmentDto);
@@ -70,16 +70,16 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         return getTimeRecordDto(records);
     }
 
-    private List<AttendanceRecordTimeDto> getTimeRecordDto(List<AttendanceRecord> records) {
+    private AttendanceRecordTimeDto getTimeRecordDto(List<AttendanceRecord> records) {
 
         List<AttendanceRecordTimeDto> dtoList = new ArrayList<>();
-
+        AttendanceRecordTimeDto recordTimeDto = new AttendanceRecordTimeDto();
         for (AttendanceRecord r : records) {
-            AttendanceRecordTimeDto recordTimeDto = recordTimeMapper.entityToDto(r);
-            dtoList.add(recordTimeDto);
+            recordTimeDto = recordTimeMapper.entityToDto(r);
+//            dtoList.add(recordTimeDto);
         }
 
-        return dtoList;
+        return recordTimeDto;
     }
 
     private List<AttendanceRecordDto> getRecordDto(List<AttendanceRecord> records) {
