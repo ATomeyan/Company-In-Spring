@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +78,9 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         List<AttendanceRecordTimeDto> dtoList = new ArrayList<>();
         AttendanceRecordTimeDto recordTimeDto = new AttendanceRecordTimeDto();
         for (AttendanceRecord r : records) {
+
             recordTimeDto = recordTimeMapper.entityToDto(r);
+            recordTimeDto.setTime(getTime(r.getEntranceTime(), r.getExitTime()));
 //            dtoList.add(recordTimeDto);
         }
 
@@ -92,5 +97,22 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         }
 
         return dtoList;
+    }
+
+    private String getTime(LocalDateTime from, LocalDateTime to) {
+
+        List<Long> hours = new ArrayList<>();
+        List<Long> minutes = new ArrayList<>();
+        List<Long> seconds = new ArrayList<>();
+        Duration duration = Duration.between(from, to);
+        long h = duration.toHours();
+        hours.add(h);
+        long m = duration.toMinutes();
+        minutes.add(m);
+        long s = duration.getSeconds();
+        seconds.add(s);
+
+//        long m = ChronoUnit.MINUTES.between(from, to);
+        return hours + ":" + minutes + ":" + seconds;
     }
 }

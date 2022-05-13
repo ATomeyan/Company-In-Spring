@@ -21,7 +21,7 @@ public class AttendanceRecordTimeMapper {
 
         attendanceRecordTimeDto.setFirstName(attendanceRecord.getEmployee().getFirstName());
         attendanceRecordTimeDto.setLastName(attendanceRecord.getEmployee().getLastName());
-        attendanceRecordTimeDto.setTime(getTime(attendanceRecord.getEntranceTime(), attendanceRecord.getExitTime()));
+//        attendanceRecordTimeDto.setTime(getTime(attendanceRecord.getEntranceTime(), attendanceRecord.getExitTime()));
 
         return attendanceRecordTimeDto;
     }
