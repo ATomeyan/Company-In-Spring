@@ -12,8 +12,4 @@ public interface AttendanceRecordRepository extends JpaRepository<AttendanceReco
     @Query("FROM AttendanceRecord r join Department d on d.id=:#{#record.employee.department.id} where " +
             ":#{#record.entranceTime} BETWEEN :#{#record.entranceTime} AND :#{#record.exitTime}")
     Optional<List<AttendanceRecord>> findRecordByCriteria(AttendanceRecord record);
-
-    @Query("FROM AttendanceRecord r join Department d on d.id=:#{#record.employee.department.id} where " +
-            ":#{#record.entranceTime} BETWEEN :#{#record.entranceTime} AND :#{#record.exitTime}")
-    Optional<AttendanceRecord> findRecordBy(AttendanceRecord record);
 }
