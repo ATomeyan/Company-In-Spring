@@ -33,6 +33,7 @@ public class AttendanceRecordTimeMapper {
         long h = duration.toHours();
         hours.add(h);
 
+        long m = ChronoUnit.MINUTES.between(from, to);
         return hours + ":";
     }
 }
