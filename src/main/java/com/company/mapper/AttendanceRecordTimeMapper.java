@@ -46,10 +46,10 @@ public class AttendanceRecordTimeMapper {
 
         Long time = 0L;
         for (Long t: hours) {
-            hours.add(t + t);
+            time += t;
         }
 
-        return hours.toString(); // + ":" + m + ":" + s;
+        return time.toString(); // + ":" + m + ":" + s;
     }
 }
 /*
