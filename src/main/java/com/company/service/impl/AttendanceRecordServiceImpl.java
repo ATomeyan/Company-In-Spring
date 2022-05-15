@@ -16,9 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +54,7 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
     }
 
     @Override
-    public AttendanceRecordTimeDto getRecordTimeCounter(RecordsDepartmentDto recordsDepartmentDto) {
+    public List<AttendanceRecordTimeDto> getRecordTimeCounter(RecordsDepartmentDto recordsDepartmentDto) {
 
         if (recordsDepartmentDto == null) {
             LOGGER.error("The date time {} is not valid. ", recordsDepartmentDto);
@@ -73,18 +70,16 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         return getTimeRecordDto(records);
     }
 
-    private AttendanceRecordTimeDto getTimeRecordDto(List<AttendanceRecord> records) {
+    private List<AttendanceRecordTimeDto> getTimeRecordDto(List<AttendanceRecord> records) {
 
         List<AttendanceRecordTimeDto> dtoList = new ArrayList<>();
-        AttendanceRecordTimeDto recordTimeDto = new AttendanceRecordTimeDto();
-        for (AttendanceRecord r : records) {
 
-            recordTimeDto = recordTimeMapper.entityToDto(r);
-            recordTimeDto.setTime(getTime(r.getEntranceTime(), r.getExitTime()));
-//            dtoList.add(recordTimeDto);
+        for (AttendanceRecord r : records) {
+            AttendanceRecordTimeDto recordTimeDto = recordTimeMapper.entityToDto(r);
+            dtoList.add(recordTimeDto);
         }
 
-        return recordTimeDto;
+        return dtoList;
     }
 
     private List<AttendanceRecordDto> getRecordDto(List<AttendanceRecord> records) {
@@ -99,7 +94,7 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         return dtoList;
     }
 
-    private String getTime(LocalDateTime from, LocalDateTime to) {
+    /*private String getTime(LocalDateTime from, LocalDateTime to) {
 
         List<Long> hours = new ArrayList<>();
         List<Long> minutes = new ArrayList<>();
@@ -114,5 +109,5 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
 
 //        long m = ChronoUnit.MINUTES.between(from, to);
         return hours + ":" + minutes + ":" + seconds;
-    }
+    }*/
 }

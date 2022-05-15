@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AttendanceRecordTimeMapper {
@@ -17,24 +18,38 @@ public class AttendanceRecordTimeMapper {
             throw new IllegalArgumentException();
         }
 
+        String time = getTime(attendanceRecord.getEntranceTime(), attendanceRecord.getExitTime());
         AttendanceRecordTimeDto attendanceRecordTimeDto = new AttendanceRecordTimeDto();
 
         attendanceRecordTimeDto.setFirstName(attendanceRecord.getEmployee().getFirstName());
         attendanceRecordTimeDto.setLastName(attendanceRecord.getEmployee().getLastName());
-//        attendanceRecordTimeDto.setTime(getTime(attendanceRecord.getEntranceTime(), attendanceRecord.getExitTime()));
+        attendanceRecordTimeDto.setTime(time);
 
         return attendanceRecordTimeDto;
     }
 
     private String getTime(LocalDateTime from, LocalDateTime to) {
 
-        List<Long> hours = new ArrayList<>();
-        Duration duration = Duration.between(from, to);
-        long h = duration.toHours();
+        List<Long> hours = new LinkedList<>();
+        List<Long> minutes = new LinkedList<>();
+        List<Long> seconds = new LinkedList<>();
+//        Duration duration = Duration.between(from, to);
+        long h = ChronoUnit.HOURS.between(from, to);
+        long m = ChronoUnit.MINUTES.between(from, to) / 60;
+        long s = ChronoUnit.SECONDS.between(from, to) % 60;
         hours.add(h);
+        minutes.add(m);
+        seconds.add(s);
+//        long h = duration.toHours();
+//        long m = duration.toMinutes();
+//        long s = duration.getSeconds();
 
-        long m = ChronoUnit.MINUTES.between(from, to);
-        return hours + ":";
+        Long time = 0L;
+        for (Long t: hours) {
+            hours.add(t + t);
+        }
+
+        return hours.toString(); // + ":" + m + ":" + s;
     }
 }
 /*
