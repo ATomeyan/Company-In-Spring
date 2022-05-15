@@ -30,7 +30,7 @@ public class AttendanceRecordTimeMapper {
 
     private String getTime(LocalDateTime from, LocalDateTime to) {
 
-        List<Long> hours = new LinkedList<>();
+        List<Long> hours = new ArrayList<>();
         List<Long> minutes = new LinkedList<>();
         List<Long> seconds = new LinkedList<>();
 //        Duration duration = Duration.between(from, to);
