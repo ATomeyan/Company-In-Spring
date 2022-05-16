@@ -17,9 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class AttendanceRecordServiceImpl implements AttendanceRecordService {
@@ -75,32 +78,32 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
 
     private List<AttendanceRecordTimeDto> getTimeRecordDto(List<AttendanceRecord> records) {
 
-        AttendanceRecordTimeDto recordTimeDto = new AttendanceRecordTimeDto();
         List<AttendanceRecordTimeDto> dtoList = new ArrayList<>();
-        Map<Integer, LocalTime> map = new HashMap<>();
+        Map<Integer, Long> map = new HashMap<>();
 
-        for (AttendanceRecord r : records) {
+        for (AttendanceRecord record : records) {
+            long millis = Duration.between(record.getEntranceTime(), record.getExitTime()).toMillis();
+            if (map.containsKey(record.getEmployee().getId())) {
+                map.put(record.getEmployee().getId(), millis + map.get(record.getEmployee().getId()));
+            } else {
+                map.put(record.getEmployee().getId(), millis);
+            }
+        }
 
-            Duration date = Duration.between(r.getEntranceTime(), r.getExitTime());
-            LocalTime hour = LocalTime.of((int) date.toHours(), (int) date.toMinutes() % 60, (int) date.getSeconds() % 60);
-            LocalTime total = LocalTime.now();
-            map.put(r.getId(), hour);
+        map.forEach((key, value) -> {
+            AttendanceRecordTimeDto recordTimeDto = new AttendanceRecordTimeDto();
 
-            if (map.containsKey(r.getId())) {
+            long HH = TimeUnit.MILLISECONDS.toHours(value);
+            long MM = TimeUnit.MILLISECONDS.toMinutes(value) % 60;
+            long SS = TimeUnit.MILLISECONDS.toSeconds(value) % 60;
 
-                LocalTime time = map.get(r.getId());
-
-                for (Map.Entry<Integer, LocalTime> entry : map.entrySet()) {
-                    LocalTime times = entry.getValue();
-
-                    total = time.plusHours(times.getHour()).plusMinutes(times.getMinute()).plusSeconds(times.getSecond());
-                }
+            for (AttendanceRecord r: records) {
+                recordTimeDto = recordTimeMapper.entityToDto(r);
             }
 
-            recordTimeDto.setTime(total);
-            recordTimeDto = recordTimeMapper.entityToDto(r);
+            recordTimeDto.setTime(LocalTime.of((int) HH, (int) MM, (int) SS));
             dtoList.add(recordTimeDto);
-        }
+        });
 
         return dtoList;
     }
@@ -115,19 +118,5 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         }
 
         return dtoList;
-    }
-
-    private Duration getTime(LocalDateTime from, LocalDateTime to) {
-
-        Duration duration = Duration.between(from, to);
-
-//        long h = ChronoUnit.HOURS.between(from, to);
-//        long m = ChronoUnit.MINUTES.between(from, to) / 60;
-//        long s = ChronoUnit.SECONDS.between(from, to) % 60;
-//        long h = duration.toHours();
-//        long m = duration.toMinutes();
-//        long s = duration.getSeconds();
-
-        return duration;
     }
 }
