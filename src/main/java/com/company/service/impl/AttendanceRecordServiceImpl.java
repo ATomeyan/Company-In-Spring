@@ -16,8 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AttendanceRecordServiceImpl implements AttendanceRecordService {
@@ -62,6 +67,7 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         }
 
         List<AttendanceRecord> records = repository.findRecordByCriteria(recordsDepartmentMapper.dtoToEntity(recordsDepartmentDto)).orElse(null);
+
         if (records == null) {
             LOGGER.error("Records is not found {}. ", records);
             throw new NotFoundException("Records is not found.");
@@ -72,10 +78,25 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
 
     private List<AttendanceRecordTimeDto> getTimeRecordDto(List<AttendanceRecord> records) {
 
+        AttendanceRecordTimeDto recordTimeDto = new AttendanceRecordTimeDto();
         List<AttendanceRecordTimeDto> dtoList = new ArrayList<>();
+        Map<Integer, LocalTime> map = new HashMap<>();
 
         for (AttendanceRecord r : records) {
-            AttendanceRecordTimeDto recordTimeDto = recordTimeMapper.entityToDto(r);
+
+            Duration date = Duration.between(r.getEntranceTime(), r.getExitTime());
+            LocalTime hour = LocalTime.of((int) date.toHours(), (int) date.toMinutes() % 60, (int) date.getSeconds() % 60);
+            LocalTime total = LocalTime.now();
+            map.put(r.getId(), hour);
+
+            if (map.containsKey(r.getId())) {
+
+                LocalTime time = map.get(r.getId());
+                total = time.plusHours(time.getHour()).plusMinutes(time.getMinute()).plusSeconds(time.getSecond());
+            }
+
+            recordTimeDto.setTime(total);
+            recordTimeDto = recordTimeMapper.entityToDto(r);
             dtoList.add(recordTimeDto);
         }
 
@@ -94,20 +115,17 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
         return dtoList;
     }
 
-    /*private String getTime(LocalDateTime from, LocalDateTime to) {
+    private Duration getTime(LocalDateTime from, LocalDateTime to) {
 
-        List<Long> hours = new ArrayList<>();
-        List<Long> minutes = new ArrayList<>();
-        List<Long> seconds = new ArrayList<>();
         Duration duration = Duration.between(from, to);
-        long h = duration.toHours();
-        hours.add(h);
-        long m = duration.toMinutes();
-        minutes.add(m);
-        long s = duration.getSeconds();
-        seconds.add(s);
 
-//        long m = ChronoUnit.MINUTES.between(from, to);
-        return hours + ":" + minutes + ":" + seconds;
-    }*/
+//        long h = ChronoUnit.HOURS.between(from, to);
+//        long m = ChronoUnit.MINUTES.between(from, to) / 60;
+//        long s = ChronoUnit.SECONDS.between(from, to) % 60;
+//        long h = duration.toHours();
+//        long m = duration.toMinutes();
+//        long s = duration.getSeconds();
+
+        return duration;
+    }
 }
