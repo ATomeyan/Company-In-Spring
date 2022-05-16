@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AttendanceRecordServiceImpl implements AttendanceRecordService {
@@ -92,7 +89,12 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
             if (map.containsKey(r.getId())) {
 
                 LocalTime time = map.get(r.getId());
-                total = time.plusHours(time.getHour()).plusMinutes(time.getMinute()).plusSeconds(time.getSecond());
+
+                for (Map.Entry<Integer, LocalTime> entry : map.entrySet()) {
+                    LocalTime times = entry.getValue();
+
+                    total = time.plusHours(times.getHour()).plusMinutes(times.getMinute()).plusSeconds(times.getSecond());
+                }
             }
 
             recordTimeDto.setTime(total);
