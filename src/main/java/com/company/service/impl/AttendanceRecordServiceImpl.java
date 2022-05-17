@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -97,11 +94,12 @@ public class AttendanceRecordServiceImpl implements AttendanceRecordService {
             long MM = TimeUnit.MILLISECONDS.toMinutes(value) % 60;
             long SS = TimeUnit.MILLISECONDS.toSeconds(value) % 60;
 
-            for (AttendanceRecord r: records) {
-                recordTimeDto = recordTimeMapper.entityToDto(r);
+            for (AttendanceRecord r : records) {
+                if (Objects.equals(key, r.getEmployee().getId())) {
+                    recordTimeDto = recordTimeMapper.entityToDto(r);
+                    recordTimeDto.setTime(LocalTime.of((int) HH, (int) MM, (int) SS));
+                }
             }
-
-            recordTimeDto.setTime(LocalTime.of((int) HH, (int) MM, (int) SS));
             dtoList.add(recordTimeDto);
         });
 
