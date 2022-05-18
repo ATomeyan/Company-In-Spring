@@ -7,7 +7,7 @@ import com.company.exceptions.NotFoundException;
 import com.company.exceptions.NotValidException;
 import com.company.mapper.DepartmentMapper;
 import com.company.repository.DepartmentRepository;
-import com.company.service.DepartmentService;
+import com.company.service.IDepartmentService;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DepartmentServiceImpl implements DepartmentService {
+public class DepartmentService implements IDepartmentService {
 
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(DepartmentServiceImpl.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(DepartmentService.class);
     private final DepartmentMapper departmentMapper;
     private final DepartmentRepository repository;
 
-    public DepartmentServiceImpl(DepartmentRepository repository) {
+    public DepartmentService(DepartmentRepository repository) {
         this.repository = repository;
         departmentMapper = new DepartmentMapper();
     }

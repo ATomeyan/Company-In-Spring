@@ -1,7 +1,7 @@
 package com.company.controller;
 
 import com.company.dto.DepartmentDto;
-import com.company.service.DepartmentService;
+import com.company.service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/departments")
 public class DepartmentController {
 
-    private final DepartmentService service;
+    private final IDepartmentService service;
 
     @Autowired
-    public DepartmentController(DepartmentService service) {
+    public DepartmentController(IDepartmentService service) {
         this.service = service;
     }
 

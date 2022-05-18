@@ -3,7 +3,7 @@ package com.company.controller;
 import com.company.dto.AttendanceRecordDto;
 import com.company.dto.AttendanceRecordTimeDto;
 import com.company.dto.RecordsDepartmentDto;
-import com.company.service.AttendanceRecordService;
+import com.company.service.IAttendanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.util.List;
 @RequestMapping("/records")
 public class AttendanceRecordController {
 
-    private final AttendanceRecordService service;
+    private final IAttendanceRecordService service;
 
     @Autowired
-    public AttendanceRecordController(AttendanceRecordService service) {
+    public AttendanceRecordController(IAttendanceRecordService service) {
         this.service = service;
     }
 

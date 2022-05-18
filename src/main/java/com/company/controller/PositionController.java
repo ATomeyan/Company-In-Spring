@@ -1,7 +1,7 @@
 package com.company.controller;
 
 import com.company.dto.PositionDto;
-import com.company.service.PositionService;
+import com.company.service.IPositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/positions")
 public class PositionController {
 
-    private final PositionService service;
+    private final IPositionService service;
 
     @Autowired
-    public PositionController(PositionService service) {
+    public PositionController(IPositionService service) {
         this.service = service;
     }
 

@@ -12,7 +12,7 @@ import com.company.mapper.EmployeeMapper;
 import com.company.repository.DepartmentRepository;
 import com.company.repository.EmployeeRepository;
 import com.company.repository.PositionRepository;
-import com.company.service.EmployeeService;
+import com.company.service.IEmployeeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,16 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeService implements IEmployeeService {
 
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EmployeeServiceImpl.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EmployeeService.class);
     private final EmployeeMapper employeeMapper;
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
     private final DepartmentRepository departmentRepository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository repository, PositionRepository positionRepository, DepartmentRepository departmentRepository) {
+    public EmployeeService(EmployeeRepository repository, PositionRepository positionRepository, DepartmentRepository departmentRepository) {
         this.employeeRepository = repository;
         this.positionRepository = positionRepository;
         this.departmentRepository = departmentRepository;

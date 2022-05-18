@@ -11,7 +11,7 @@ import com.company.mapper.AttendanceRecordMapper;
 import com.company.mapper.AttendanceRecordTimeMapper;
 import com.company.mapper.RecordsDepartmentMapper;
 import com.company.repository.AttendanceRecordRepository;
-import com.company.service.AttendanceRecordService;
+import com.company.service.IAttendanceRecordService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,16 +22,16 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class AttendanceRecordServiceImpl implements AttendanceRecordService {
+public class AttendanceRecordService implements IAttendanceRecordService {
 
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AttendanceRecordServiceImpl.class);
+    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AttendanceRecordService.class);
     private final AttendanceRecordMapper recordMapper;
     private final RecordsDepartmentMapper recordsDepartmentMapper;
     private final AttendanceRecordTimeMapper recordTimeMapper;
     private final AttendanceRecordRepository repository;
 
     @Autowired
-    public AttendanceRecordServiceImpl(AttendanceRecordRepository repository) {
+    public AttendanceRecordService(AttendanceRecordRepository repository) {
         this.repository = repository;
         recordMapper = new AttendanceRecordMapper();
         recordsDepartmentMapper = new RecordsDepartmentMapper();
