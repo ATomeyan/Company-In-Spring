@@ -41,6 +41,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
 
         String userName = request.getUsername();
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+
         User user = repository.findByUserName(userName).orElse(null);
 
         if (user == null) {
@@ -48,16 +49,9 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
             throw new UsernameNotFoundException("User by user name was not found or invalid.");
         }
 
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         String token = jwtToken.generateToken(userName);
 
-        LOGGER.info("Successfully authenticated");
-
-        authenticationResponse.setUserName(userName);
-        authenticationResponse.setToken(token);
-        authenticationResponse.setDto(employeeMapper.entityToDto(user.getEmployee()));
-
-        return authenticationResponse;
+        return new AuthenticationResponse(userName, token, employeeMapper.entityToDto(user.getEmployee()));
     }
 
     @Override
