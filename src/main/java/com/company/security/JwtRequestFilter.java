@@ -1,4 +1,4 @@
-package com.company.config;
+package com.company.security;
 
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;

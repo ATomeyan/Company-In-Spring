@@ -1,7 +1,7 @@
 package com.company.service.impl;
 
 import ch.qos.logback.classic.Logger;
-import com.company.config.JwtToken;
+import com.company.security.JwtToken;
 import com.company.dto.AuthenticationRequest;
 import com.company.dto.AuthenticationResponse;
 import com.company.entity.User;
