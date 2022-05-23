@@ -1,48 +1,39 @@
 package com.company.security;
 
-import ch.qos.logback.classic.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class JwtRequestFilter extends OncePerRequestFilter {
+public class JwtRequestFilter extends GenericFilterBean {
 
-    private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(JwtRequestFilter.class);
+    private final JwtToken token;
 
     @Autowired
-    private JwtToken token;
+    public JwtRequestFilter(JwtToken token) {
+        this.token = token;
+    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String requestTokenHeader = request.getHeader("Authorization");
+        String requestToken = token.resolveToken((HttpServletRequest) request);
 
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-            String jwtToken = requestTokenHeader.substring(7);
-            String username = token.getUsernameFromToken(jwtToken);
-
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null && token.validateToken(jwtToken, username)) {
-
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null);
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        if (requestToken != null && token.validateToken(requestToken)) {
+            Authentication authentication = token.getAuthentication(requestToken);
+            if (authentication != null) {
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } else {
-            LOGGER.warn("JWT Token does not begin with Bearer String");
         }
-
 
         filterChain.doFilter(request, response);
     }

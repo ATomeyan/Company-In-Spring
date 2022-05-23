@@ -11,7 +11,9 @@ import com.company.service.IAuthenticationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,7 +42,11 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     public AuthenticationResponse login(AuthenticationRequest request) {
 
         String userName = request.getUsername();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
 
         User user = repository.findByUserName(userName).orElse(null);
 
@@ -49,7 +55,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
             throw new UsernameNotFoundException("User by user name was not found or invalid.");
         }
 
-        String token = jwtToken.generateToken(userName);
+        String token = jwtToken.createToken(userName);
 
         return new AuthenticationResponse(userName, token, employeeMapper.entityToDto(user.getEmployee()));
     }

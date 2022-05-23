@@ -25,7 +25,7 @@ public class AdviserController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<Object> handleAlreadyExistException(AlreadyExistsException e){
+    public ResponseEntity<Object> handleAlreadyExistException(AlreadyExistsException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
 
         exceptionResponse.setDateTime(LocalDateTime.now());
@@ -37,14 +37,26 @@ public class AdviserController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Object> handleNotFoundException(NotFoundException e){
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException e) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
 
         exceptionResponse.setDateTime(LocalDateTime.now());
-        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-        exceptionResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        exceptionResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        exceptionResponse.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
         exceptionResponse.setMessage(e.getMessage());
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserAuthenticationException.class)
+    public ResponseEntity<Object> handleUserAuthenticationException(UserAuthenticationException e) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+
+        exceptionResponse.setDateTime(LocalDateTime.now());
+        exceptionResponse.setStatus(HttpStatus.FORBIDDEN.value());
+        exceptionResponse.setError(HttpStatus.FORBIDDEN.getReasonPhrase());
+        exceptionResponse.setMessage(e.getMessage());
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
     }
 }
