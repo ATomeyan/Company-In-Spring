@@ -1,19 +1,19 @@
 package com.company.service.impl;
 
 import ch.qos.logback.classic.Logger;
-import com.company.security.JwtToken;
 import com.company.dto.AuthenticationRequest;
 import com.company.dto.AuthenticationResponse;
 import com.company.entity.User;
+import com.company.exceptions.UserAuthenticationException;
 import com.company.mapper.EmployeeMapper;
 import com.company.repository.UserRepository;
+import com.company.security.JwtToken;
 import com.company.service.IAuthenticationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,7 +44,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
         String userName = request.getUsername();
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        } catch (AuthenticationException e) {
+        } catch (UserAuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
 
