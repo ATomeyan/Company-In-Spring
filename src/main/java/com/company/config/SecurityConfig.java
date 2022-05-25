@@ -9,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -35,18 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and()
                     .csrf().disable()
-                        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                    .authorizeRequests()
-                        .antMatchers(HttpMethod.POST,"/authenticate/**").permitAll()
-                        .antMatchers(HttpMethod.GET,"/employees").permitAll()
-                        .antMatchers(HttpMethod.POST,"/employees/**").hasAnyRole()
-                        .antMatchers(HttpMethod.PUT,"/employees/**").hasAnyRole()
-                        .antMatchers(HttpMethod.DELETE,"/employees/**").hasAnyRole()
-                        .antMatchers("/records/**").permitAll()
-                        .antMatchers("/positions/**").permitAll()
-                        .antMatchers("/departments/**").permitAll()
-                    .anyRequest().authenticated()
+                    .httpBasic().disable()
+                        .authorizeRequests()
+                            .antMatchers(HttpMethod.POST, "/authenticate/login").permitAll()
+                            .antMatchers("/employees/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("USER")
+//                            .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("USER")
+                            .antMatchers(HttpMethod.GET, "/employees/**").permitAll()
+                            .antMatchers("/positions/**").hasRole("USER")
+                            .antMatchers("/departments/**").hasRole("USER")
+                            .antMatchers("/records/**").hasRole("USER")
+                        .anyRequest().authenticated()
                 .and()
                     .apply(new JwtConfigurer(jwtToken));
     }

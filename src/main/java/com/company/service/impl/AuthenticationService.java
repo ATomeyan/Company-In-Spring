@@ -3,6 +3,7 @@ package com.company.service.impl;
 import ch.qos.logback.classic.Logger;
 import com.company.dto.AuthenticationRequest;
 import com.company.dto.AuthenticationResponse;
+import com.company.entity.Role;
 import com.company.entity.User;
 import com.company.exceptions.UserAuthenticationException;
 import com.company.mapper.EmployeeMapper;
@@ -14,12 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static java.util.Collections.emptyList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthenticationService implements IAuthenticationService, UserDetailsService {
@@ -42,8 +48,9 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     public AuthenticationResponse login(AuthenticationRequest request) {
 
         String userName = request.getUsername();
+        String password = request.getPassword();
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
         } catch (UserAuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
@@ -66,6 +73,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
         if (user == null) {
             throw new UsernameNotFoundException("User by user name was not found or invalid.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), emptyList());
+        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
+                Collections.singleton(new SimpleGrantedAuthority(Objects.requireNonNull(Role.fromName("USER")).toString())));
     }
 }
