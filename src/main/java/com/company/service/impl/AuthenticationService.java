@@ -3,7 +3,6 @@ package com.company.service.impl;
 import ch.qos.logback.classic.Logger;
 import com.company.dto.AuthenticationRequest;
 import com.company.dto.AuthenticationResponse;
-import com.company.entity.Role;
 import com.company.entity.User;
 import com.company.exceptions.UserAuthenticationException;
 import com.company.mapper.EmployeeMapper;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,9 +21,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class AuthenticationService implements IAuthenticationService, UserDetailsService {
@@ -47,33 +44,35 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     @Override
     public AuthenticationResponse login(AuthenticationRequest request) {
 
-        String userName = request.getUsername();
+        String username = request.getUsername();
         String password = request.getPassword();
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (UserAuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
 
-        User user = repository.findByUserName(userName).orElse(null);
+        User user = repository.findByUserName(username).orElse(null);
 
         if (user == null) {
-            LOGGER.error("User by user name {} was not found or invalid:", userName);
+            LOGGER.error("User by user name {} was not found or invalid:", username);
             throw new UsernameNotFoundException("User by user name was not found or invalid.");
         }
 
-        String token = jwtToken.createToken(userName);
 
-        return new AuthenticationResponse(userName, token, employeeMapper.entityToDto(user.getEmployee()));
+        String token = jwtToken.createToken(username);
+
+        return new AuthenticationResponse(username, token, employeeMapper.entityToDto(user.getEmployee()));
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Set<SimpleGrantedAuthority> role = new HashSet<>(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
+
         User user = repository.findByUserName(username).orElse(null);
         if (user == null) {
             throw new UsernameNotFoundException("User by user name was not found or invalid.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority(Objects.requireNonNull(Role.fromName("USER")).toString())));
+        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), role);
     }
 }

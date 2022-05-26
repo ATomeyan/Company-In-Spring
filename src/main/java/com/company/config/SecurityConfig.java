@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtToken jwtToken;
 
     @Autowired
-    public SecurityConfig(JwtToken jwtToken){
+    public SecurityConfig(JwtToken jwtToken) {
         this.jwtToken = jwtToken;
     }
 
@@ -37,16 +37,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .httpBasic().disable()
                         .authorizeRequests()
                             .antMatchers(HttpMethod.POST, "/authenticate/login").permitAll()
-                            .antMatchers("/employees/**").hasRole("USER")
-//                            .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("USER")
-//                            .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("USER")
                             .antMatchers(HttpMethod.GET, "/employees/**").permitAll()
+                            .antMatchers(HttpMethod.POST, "/employees/**").hasRole("USER")
+                            .antMatchers(HttpMethod.PUT, "/employees/**").hasRole("USER")
+                            .antMatchers(HttpMethod.DELETE, "/employees/**").hasRole("USER")
                             .antMatchers("/positions/**").hasRole("USER")
                             .antMatchers("/departments/**").hasRole("USER")
                             .antMatchers("/records/**").hasRole("USER")
                         .anyRequest().authenticated()
                 .and()
-                    .apply(new JwtConfigurer(jwtToken));
+                .apply(new JwtConfigurer(jwtToken));
     }
 
     @Bean

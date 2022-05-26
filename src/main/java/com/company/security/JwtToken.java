@@ -5,12 +5,12 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
+import java.util.*;
 
 @Component
 public class JwtToken {
@@ -42,7 +42,7 @@ public class JwtToken {
 
     public Authentication getAuthentication(String token) {
 
-        return new UsernamePasswordAuthenticationToken(getUsername(token), "");
+        return new UsernamePasswordAuthenticationToken(getUsername(token), "", Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     public String getUsername(String token) {
