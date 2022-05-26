@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .antMatchers("/records/**").hasRole("USER")
                         .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtToken));
+                    .apply(new JwtConfigurer(jwtToken));
     }
 
     @Bean
