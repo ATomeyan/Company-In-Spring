@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.company.dto.AuthenticationRequest;
 import com.company.dto.AuthenticationResponse;
 import com.company.entity.User;
+import com.company.exceptions.NotFoundException;
 import com.company.exceptions.UserAuthenticationException;
 import com.company.mapper.EmployeeMapper;
 import com.company.repository.UserRepository;
@@ -14,12 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,6 +69,19 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
         String token = jwtToken.createToken(username);
 
         return new AuthenticationResponse(username, token, employeeMapper.entityToDto(user.getEmployee()));
+    }
+
+    @Override
+    public void logOut(HttpServletRequest request, HttpServletResponse response) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null){
+            LOGGER.error("User is not logged in");
+            throw new NotFoundException("User is not logged in");
+        }
+
+        new SecurityContextLogoutHandler().logout(request, response, authentication);
     }
 
     @Override

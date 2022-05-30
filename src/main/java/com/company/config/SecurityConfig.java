@@ -45,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .antMatchers("/departments/**").permitAll()
                             .antMatchers("/records/**").permitAll()
                         .anyRequest().authenticated()
-                .and()
-                    .apply(new JwtConfigurer(jwtToken));
+                    .and()
+                        .apply(new JwtConfigurer(jwtToken));
     }
 
     @Bean
