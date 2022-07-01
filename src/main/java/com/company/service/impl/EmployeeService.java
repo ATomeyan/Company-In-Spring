@@ -39,7 +39,6 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    @Transactional
     public List<EmployeeDto> getAllEmployees() {
 
         List<Employee> employees = employeeRepository.findAll();
@@ -64,7 +63,6 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    @Transactional
     public EmployeeDto getEmployeeById(Integer id) {
 
         if (id == null || id <= 0) {
