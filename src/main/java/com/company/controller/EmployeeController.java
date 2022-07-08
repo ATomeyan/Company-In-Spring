@@ -53,10 +53,10 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable Integer id) {
+    public void deleteEmployee(@PathVariable Integer id) {
 
         service.deleteEmployee(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        new ResponseEntity<>(HttpStatus.OK);
     }
 }
