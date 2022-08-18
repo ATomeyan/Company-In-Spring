@@ -1,7 +1,10 @@
 package com.company.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "user")
@@ -65,24 +68,36 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(userName, user.userName) 
-                && Objects.equals(password, user.password) && Objects.equals(employee, user.employee);
+
+        return new EqualsBuilder()
+                .append(id, user.id)
+                .append(userName, user.userName)
+                .append(password, user.password)
+                .append(employee, user.employee)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userName, password, employee);
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(userName)
+                .append(password)
+                .append(employee)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", employee=" + employee +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("userName", userName)
+                .append("password", password)
+                .append("employee", employee)
+                .toString();
     }
 }

@@ -1,7 +1,10 @@
 package com.company.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "department")
@@ -41,21 +44,24 @@ public class Department {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
+
         Department that = (Department) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+
+        return new EqualsBuilder().append(id, that.id).append(name, that.name).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return new HashCodeBuilder(17, 37).append(id).append(name).toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Department{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("name", name)
+                .toString();
     }
 }

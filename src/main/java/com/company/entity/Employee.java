@@ -1,8 +1,11 @@
 package com.company.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "employee")
@@ -129,32 +132,51 @@ public class Employee {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
+
         Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id) && Objects.equals(firstName, employee.firstName) &&
-                Objects.equals(lastName, employee.lastName) && Objects.equals(dateOfBirth, employee.dateOfBirth) &&
-                Objects.equals(email, employee.email) && Objects.equals(gender, employee.gender) &&
-                Objects.equals(active, employee.active) && Objects.equals(position, employee.position) &&
-                Objects.equals(department, employee.department);
+
+        return new EqualsBuilder()
+                .append(id, employee.id)
+                .append(firstName, employee.firstName)
+                .append(lastName, employee.lastName)
+                .append(dateOfBirth, employee.dateOfBirth)
+                .append(email, employee.email)
+                .append(gender, employee.gender)
+                .append(active, employee.active)
+                .append(position, employee.position)
+                .append(department, employee.department)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, email, gender, active, position, department);
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(firstName)
+                .append(lastName)
+                .append(dateOfBirth)
+                .append(email)
+                .append(gender)
+                .append(active)
+                .append(position)
+                .append(department)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", email='" + email + '\'' +
-                ", gender='" + gender + '\'' +
-                ", active=" + active +
-                ", position=" + position +
-                ", department=" + department +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .append("dateOfBirth", dateOfBirth)
+                .append("email", email)
+                .append("gender", gender)
+                .append("active", active)
+                .append("position", position)
+                .append("department", department)
+                .toString();
     }
 }

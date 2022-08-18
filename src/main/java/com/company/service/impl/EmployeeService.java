@@ -2,16 +2,12 @@ package com.company.service.impl;
 
 import ch.qos.logback.classic.Logger;
 import com.company.dto.EmployeeDto;
-import com.company.entity.Department;
 import com.company.entity.Employee;
-import com.company.entity.Position;
 import com.company.exceptions.AlreadyExistsException;
 import com.company.exceptions.NotFoundException;
 import com.company.exceptions.NotValidException;
 import com.company.mapper.EmployeeMapper;
-import com.company.repository.DepartmentRepository;
 import com.company.repository.EmployeeRepository;
-import com.company.repository.PositionRepository;
 import com.company.service.IEmployeeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +23,10 @@ public class EmployeeService implements IEmployeeService {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EmployeeService.class);
     private final EmployeeMapper employeeMapper;
     private final EmployeeRepository employeeRepository;
-    private final PositionRepository positionRepository;
-    private final DepartmentRepository departmentRepository;
 
     @Autowired
-    public EmployeeService(EmployeeRepository repository, PositionRepository positionRepository, DepartmentRepository departmentRepository) {
+    public EmployeeService(EmployeeRepository repository) {
         this.employeeRepository = repository;
-        this.positionRepository = positionRepository;
-        this.departmentRepository = departmentRepository;
         employeeMapper = new EmployeeMapper();
     }
 
@@ -42,22 +34,6 @@ public class EmployeeService implements IEmployeeService {
     public List<EmployeeDto> getAllEmployees() {
 
         List<Employee> employees = employeeRepository.findAll();
-
-        for (Employee e : employees) {
-            if (e.getPosition().getId() != null) {
-                Position p = positionRepository.getById(e.getPosition().getId());
-                if (p != null) {
-                    e.setPosition(p);
-                }
-            }
-
-            if (e.getDepartment().getId() != null) {
-                Department d = departmentRepository.getById(e.getDepartment().getId());
-                if (d != null) {
-                    e.setDepartment(d);
-                }
-            }
-        }
 
         return getEmployeeDto(employees);
     }

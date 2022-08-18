@@ -1,5 +1,9 @@
 package com.company.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -67,24 +71,36 @@ public class AttendanceRecord {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
+
         AttendanceRecord that = (AttendanceRecord) o;
-        return Objects.equals(id, that.id) && Objects.equals(entranceTime, that.entranceTime) &&
-                Objects.equals(exitTime, that.exitTime) && Objects.equals(employee, that.employee);
+
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(entranceTime, that.entranceTime)
+                .append(exitTime, that.exitTime)
+                .append(employee, that.employee)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, entranceTime, exitTime, employee);
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(entranceTime)
+                .append(exitTime)
+                .append(employee)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "AttendanceRecord{" +
-                "id=" + id +
-                ", entranceTime=" + entranceTime +
-                ", exitTime=" + exitTime +
-                ", employee=" + employee +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("entranceTime", entranceTime)
+                .append("exitTime", exitTime)
+                .append("employee", employee)
+                .toString();
     }
 }
