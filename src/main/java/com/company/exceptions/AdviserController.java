@@ -59,4 +59,16 @@ public class AdviserController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(NotGeneratedException.class)
+    public ResponseEntity<Object> handleExcelGeneratedException(NotGeneratedException e) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+
+        exceptionResponse.setDateTime(LocalDateTime.now());
+        exceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        exceptionResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
+        exceptionResponse.setMessage(e.getMessage());
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }

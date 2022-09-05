@@ -56,7 +56,7 @@ class EmployeeControllerTests {
         Employee employee = new Employee();
 
         employee.setFirstName("Armen");
-        employee.setLastName("Yavrumyan");
+        employee.setLastName("");
         employee.setDateOfBirth(LocalDate.of(1992, 5, 2));
         employee.setEmail("arm.y@mail.com");
         employee.setGender("M");
