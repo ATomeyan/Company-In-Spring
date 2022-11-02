@@ -12,6 +12,7 @@ import com.company.security.JwtToken;
 import com.company.service.IAuthenticationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +41,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
     private final JwtToken jwtToken;
 
     @Autowired
-    public AuthenticationService(AuthenticationManager authenticationManager, UserRepository repository, JwtToken jwtToken) {
+    public AuthenticationService(@Lazy AuthenticationManager authenticationManager, UserRepository repository, JwtToken jwtToken) {
         this.authenticationManager = authenticationManager;
         this.repository = repository;
         this.jwtToken = jwtToken;
