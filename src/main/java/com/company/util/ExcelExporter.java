@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Artur Tomeyan
@@ -49,7 +50,10 @@ public class ExcelExporter {
                 row.createCell(1).setCellValue(employeeDto.getLastName());
                 row.createCell(2).setCellValue(employeeDto.getDateOfBirth().toString());
                 row.createCell(3).setCellValue(employeeDto.getEmail());
-                row.createCell(4).setCellValue(employeeDto.getGender());
+                if (Objects.equals(employeeDto.getGender(), "M"))
+                    row.createCell(4).setCellValue("Male");
+                else
+                    row.createCell(4).setCellValue("Female");
                 row.createCell(5).setCellValue(employeeDto.getPosition().getName());
                 row.createCell(6).setCellValue(employeeDto.getDepartment().getName());
             }
