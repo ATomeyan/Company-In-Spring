@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
 
     private final JwtToken jwtToken;
@@ -47,11 +47,13 @@ public class SecurityConfig {
                             .antMatchers("/positions/**").hasRole("USER")
                             .antMatchers("/departments/**").permitAll()
                             .antMatchers("/records/**").permitAll()
+                            .antMatchers(HttpMethod.POST, "/authenticate/logout").authenticated()
                         .anyRequest().authenticated()
                     .and()
                         .logout()
-                            .logoutUrl("/logout")
-                                .deleteCookies("JSESSIONID")
+                            .logoutUrl("/authenticate/logout")
+                                .invalidateHttpSession(true)
+                                    .deleteCookies("JSESSIONID")
                     .and()
                         .apply(new JwtConfigurer(jwtToken));
 
