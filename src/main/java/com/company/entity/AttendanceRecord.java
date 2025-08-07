@@ -1,5 +1,7 @@
 package com.company.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,6 +9,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "attendance_record")
 public class AttendanceRecord {
@@ -33,38 +37,6 @@ public class AttendanceRecord {
         this.entranceTime = entranceTime;
         this.exitTime = exitTime;
         this.employee = employee;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public LocalDateTime getExitTime() {
-        return exitTime;
-    }
-
-    public void setExitTime(LocalDateTime exitTime) {
-        this.exitTime = exitTime;
-    }
-
-    public LocalDateTime getEntranceTime() {
-        return entranceTime;
-    }
-
-    public void setEntranceTime(LocalDateTime entranceTime) {
-        this.entranceTime = entranceTime;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.company.dto.AuthenticationResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface IAuthenticationService {
+public interface AuthenticationService {
 
     AuthenticationResponse login(AuthenticationRequest request);
 

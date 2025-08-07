@@ -11,5 +11,5 @@ public class AuthenticationResponse {
 
     private String userName;
     private String token;
-    private EmployeeDto dto;
+//    private EmployeeDto dto;
 }

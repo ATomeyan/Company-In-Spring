@@ -4,7 +4,7 @@ import com.company.dto.DepartmentDto;
 
 import java.util.List;
 
-public interface IDepartmentService {
+public interface DepartmentService {
 
     List<DepartmentDto> getAllDepartments();
 

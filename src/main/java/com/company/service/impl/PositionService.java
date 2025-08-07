@@ -7,7 +7,6 @@ import com.company.exceptions.NotFoundException;
 import com.company.exceptions.NotValidException;
 import com.company.mapper.PositionMapper;
 import com.company.repository.PositionRepository;
-import com.company.service.IPositionService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PositionService implements IPositionService {
+public class PositionService implements com.company.service.PositionService {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(PositionService.class);
     private final PositionMapper positionMapper;

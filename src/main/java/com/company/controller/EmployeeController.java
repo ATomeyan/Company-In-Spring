@@ -1,7 +1,7 @@
 package com.company.controller;
 
 import com.company.dto.EmployeeDto;
-import com.company.service.IEmployeeService;
+import com.company.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private final IEmployeeService service;
+    private final EmployeeService service;
 
     @Autowired
-    public EmployeeController(IEmployeeService service) {
+    public EmployeeController(EmployeeService service) {
         this.service = service;
     }
 

@@ -9,7 +9,6 @@ import com.company.exceptions.UserAuthenticationException;
 import com.company.mapper.EmployeeMapper;
 import com.company.repository.UserRepository;
 import com.company.security.JwtToken;
-import com.company.service.IAuthenticationService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -32,7 +31,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class AuthenticationService implements IAuthenticationService, UserDetailsService {
+public class AuthenticationService implements com.company.service.AuthenticationService, UserDetailsService {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AuthenticationService.class);
     private final AuthenticationManager authenticationManager;
@@ -69,7 +68,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
 
         String token = jwtToken.createToken(username);
 
-        return new AuthenticationResponse(username, token, employeeMapper.entityToDto(user.getEmployee()));
+        return new AuthenticationResponse(username, token);
     }
 
     @Override

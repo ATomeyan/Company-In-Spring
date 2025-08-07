@@ -2,7 +2,6 @@ package com.company.controller;
 
 import com.company.dto.EmployeeDto;
 import com.company.entity.Employee;
-import javafx.application.Application;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @date 01/09/2022
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
 class EmployeeControllerTests {
 

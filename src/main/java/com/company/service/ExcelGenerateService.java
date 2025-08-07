@@ -6,6 +6,6 @@ import java.io.ByteArrayInputStream;
  * @author Artur Tomeyan
  * @date 05/09/2022
  */
-public interface IExcelGenerateService {
+public interface ExcelGenerateService {
     ByteArrayInputStream load();
 }

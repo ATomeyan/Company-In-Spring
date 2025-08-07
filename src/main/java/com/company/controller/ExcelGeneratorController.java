@@ -1,6 +1,6 @@
 package com.company.controller;
 
-import com.company.service.IExcelGenerateService;
+import com.company.service.ExcelGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/download")
 public class ExcelGeneratorController {
 
-    private final IExcelGenerateService generateService;
+    private final ExcelGenerateService generateService;
 
     @Autowired
-    public ExcelGeneratorController(IExcelGenerateService generateService) {
+    public ExcelGeneratorController(ExcelGenerateService generateService) {
         this.generateService = generateService;
     }
 

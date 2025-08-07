@@ -6,7 +6,7 @@ import com.company.dto.RecordsDepartmentDto;
 
 import java.util.List;
 
-public interface IAttendanceRecordService {
+public interface AttendanceRecordService {
 
     List<AttendanceRecordDto> getRecordsByCriteria(RecordsDepartmentDto recordsDepartmentDto);
 

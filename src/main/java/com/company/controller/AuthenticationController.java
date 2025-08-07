@@ -2,7 +2,7 @@ package com.company.controller;
 
 import com.company.dto.AuthenticationRequest;
 import com.company.dto.AuthenticationResponse;
-import com.company.service.IAuthenticationService;
+import com.company.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/authenticate")
 public class AuthenticationController {
 
-    private final IAuthenticationService service;
+    private final AuthenticationService service;
 
     @Autowired
-    public AuthenticationController(IAuthenticationService service) {
+    public AuthenticationController(AuthenticationService service) {
         this.service = service;
     }
 

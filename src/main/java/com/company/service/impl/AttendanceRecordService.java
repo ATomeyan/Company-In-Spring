@@ -11,7 +11,6 @@ import com.company.mapper.AttendanceRecordMapper;
 import com.company.mapper.AttendanceRecordTimeMapper;
 import com.company.mapper.RecordsDepartmentMapper;
 import com.company.repository.AttendanceRecordRepository;
-import com.company.service.IAttendanceRecordService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class AttendanceRecordService implements IAttendanceRecordService {
+public class AttendanceRecordService implements com.company.service.AttendanceRecordService {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(AttendanceRecordService.class);
     private final AttendanceRecordMapper recordMapper;

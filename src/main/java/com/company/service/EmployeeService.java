@@ -4,7 +4,7 @@ import com.company.dto.EmployeeDto;
 
 import java.util.List;
 
-public interface IEmployeeService {
+public interface EmployeeService {
 
     List<EmployeeDto> getAllEmployees();
 

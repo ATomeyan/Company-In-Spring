@@ -32,7 +32,7 @@ public class AttendanceRecordMapper {
         employeeDto.setDateOfBirth(attendanceRecord.getEmployee().getDateOfBirth());
         employeeDto.setEmail(attendanceRecord.getEmployee().getEmail());
         employeeDto.setGender(attendanceRecord.getEmployee().getGender());
-        employeeDto.setActive(attendanceRecord.getEmployee().isActive());
+        employeeDto.setActive(attendanceRecord.getEmployee().getActive());
         employeeDto.setPosition(positionDto);
         employeeDto.setDepartment(departmentDto);
 

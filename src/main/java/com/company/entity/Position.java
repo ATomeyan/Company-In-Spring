@@ -1,11 +1,15 @@
 package com.company.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "position")
 public class Position {
@@ -23,22 +27,6 @@ public class Position {
     public Position(Integer id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     @Override

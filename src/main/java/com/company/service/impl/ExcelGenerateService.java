@@ -4,8 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.company.dto.EmployeeDto;
 import com.company.exceptions.NotFoundException;
 import com.company.exceptions.NotGeneratedException;
-import com.company.service.IEmployeeService;
-import com.company.service.IExcelGenerateService;
+import com.company.service.EmployeeService;
 import com.company.util.ExcelExporter;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,13 @@ import java.util.List;
  * @date 05/09/2022
  */
 @Service
-public class ExcelGenerateService implements IExcelGenerateService {
+public class ExcelGenerateService implements com.company.service.ExcelGenerateService {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(ExcelGenerateService.class);
-    private final IEmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public ExcelGenerateService(IEmployeeService employeeService) {
+    public ExcelGenerateService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 

@@ -4,7 +4,7 @@ import com.company.dto.PositionDto;
 
 import java.util.List;
 
-public interface IPositionService {
+public interface PositionService {
 
     List<PositionDto> getAllPosition();
 

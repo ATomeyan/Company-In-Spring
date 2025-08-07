@@ -8,7 +8,6 @@ import com.company.exceptions.NotFoundException;
 import com.company.exceptions.NotValidException;
 import com.company.mapper.EmployeeMapper;
 import com.company.repository.EmployeeRepository;
-import com.company.service.IEmployeeService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EmployeeService implements IEmployeeService {
+public class EmployeeService implements com.company.service.EmployeeService {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(EmployeeService.class);
     private final EmployeeMapper employeeMapper;
